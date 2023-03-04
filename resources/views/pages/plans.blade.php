@@ -22,6 +22,7 @@
                                 <div><span>total earn:</span> {{ number_format($plan->total_earn, 0) }} FCFA</div>
                                 <div><span>withdrawal:</span> automatic</div>
                                 <div><span>min widthdrawal:</span> {{ number_format($plan->min_withdrawal, 0) }} FCFA</div>
+                                <div><span>widthdrawal charge:</span> {{ env('WITHDRAWAL_CHARGES_PERCENTAGE') }}%</div>
                                 <form action="{{ route('buy-plan') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan_id" value="{{ $plan->id }}">

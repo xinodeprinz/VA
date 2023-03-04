@@ -21,7 +21,7 @@ class Block
             $user = Auth::user();
 
             if ($user->is_blocked) {
-                return redirect()->route('index')->with('error', 'Your account has been blocked. Send us an email by submitting the form on the contact page.');
+                return redirect()->route('index')->with('info', 'Your account has been suspended due to fraudulent purposes.');
             }
         }
 

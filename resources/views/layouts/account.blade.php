@@ -9,9 +9,12 @@
     <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/style.css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+    <!-- Alerts -->
+    @include('components.alerts')
     <div class="row g-0">
         <div class="col-lg-4 col-xl-3 d-none d-lg-block">
             <!-- Sidebar -->
@@ -69,7 +72,8 @@
             <!-- Footer -->
             <footer class="dash-footer py-3">
                 <div class="container text-center">
-                    {{ config('app.name') }} &copy; copyright 2023, All rights reserved.
+                    {{ config('app.name') }} &copy; copyright {{ \Carbon\Carbon::now()->format('Y') }}, All rights
+                    reserved.
                 </div>
             </footer>
         </div>
@@ -77,7 +81,10 @@
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/all.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="/js/functions.js"></script>
+    <script src="/js/time.js"></script>
+    <script src="/js/video.js"></script>
 </body>
 
 </html>

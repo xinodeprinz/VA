@@ -23,23 +23,18 @@
                         <h1>about us</h1>
                     </div>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum
-                        facere suscipit nisi modi blanditiis doloremque at error! Amet,
-                        quae magni nulla culpa totam deleniti? Consequatur possimus
-                        recusandae eos deserunt illo?
+                        {{ config('app.name') }} also known as <span class="text-main">Sean Tv</span> is a group of
+                        Cameroonian comedians that act short funny videos and upload them on their social media channels
+                        such as Facebook, YouTube, Instagram and TikTok so as to earn money as people watch and subscribe to
+                        them.
                     </p>
                     <p>
-                        magni nulla culpa totam deleniti? Consequatur possimus recusandae
-                        eos deserunt illo?
+                        Our aim is to increase our YouTube watch hours and subscribers so as to get paid. Subscribe to a
+                        plan now and start earning money as you watch videos of this sort daily.
                     </p>
                     <div class="d-none d-lg-block">
                         <a href="{{ route('about') }}" class="btn btn-main mb-2">Learn More</a>
-                        <div class="social-media">
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-tiktok"></i></a>
-                        </div>
+                        @include('components.social-media')
                         <hr />
                     </div>
                 </div>
@@ -51,11 +46,8 @@
                 </div>
             </div>
             <div class="d-lg-none">
-                <div class="social-media mb-3 text-center">
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                <div class="text-center mb-3">
+                    @include('components.social-media')
                 </div>
                 <a href="{{ route('about') }}" class="btn btn-main">Learn More</a>
                 <hr />
@@ -86,7 +78,7 @@
                                 </div>
                                 <div><span>total earn:</span> {{ number_format($plan->total_earn, 0) }} FCFA</div>
                                 <div><span>withdrawal:</span> automatic</div>
-                                <div><span>min widthdrawal:</span> {{ number_format($plan->min_withdrawal, 0) }} FCFA</div>
+                                <div><span>widthdrawal charge:</span> {{ env('WITHDRAWAL_CHARGES_PERCENTAGE') }}%</div>
                                 <form action="{{ route('buy-plan') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan_id" value="{{ $plan->id }}">
@@ -114,21 +106,13 @@
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Accordion Item #1
+                            how do I start earning from {{ config('app.name') }}?
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is
-                            shown by default, until the collapse plugin adds the appropriate
-                            classes that we use to style each element. These classes control
-                            the overall appearance, as well as the showing and hiding via
-                            CSS transitions. You can modify any of this with custom CSS or
-                            overriding our default variables. It's also worth noting that
-                            just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit
-                            overflow.
+                            @include('components.how-to-earn')
                         </div>
                     </div>
                 </div>
@@ -136,21 +120,23 @@
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
+                            how can I get in touch with {{ config('app.name') }}?
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is
-                            hidden by default, until the collapse plugin adds the
-                            appropriate classes that we use to style each element. These
-                            classes control the overall appearance, as well as the showing
-                            and hiding via CSS transitions. You can modify any of this with
-                            custom CSS or overriding our default variables. It's also worth
-                            noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit
-                            overflow.
+                            <p>
+                                If you have any problem, get in touch with us via email using our email address <a
+                                    href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>. You can also <a
+                                    href="{{ env('TELEGRAM') }}" target="_blank">join our telegram group</a> so as to
+                                interact with our other beneficials.
+                            </p>
+                            <p>
+                                For a matter of urgency, get in touch with us quickly via email by <a
+                                    href="{{ route('contact') }}" target="_blank">filling the form on the contact
+                                    page.</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -158,21 +144,16 @@
                     <h2 class="accordion-header" id="headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Accordion Item #3
+                            how can I support and thank {{ config('app.name') }} for this financial opportunity?
                         </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>This is the third item's accordion body.</strong> It is
-                            hidden by default, until the collapse plugin adds the
-                            appropriate classes that we use to style each element. These
-                            classes control the overall appearance, as well as the showing
-                            and hiding via CSS transitions. You can modify any of this with
-                            custom CSS or overriding our default variables. It's also worth
-                            noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit
-                            overflow.
+                            <p>Support us by watching and subscribing to our social media videos and channels.</p>
+                            <div class="text-center">
+                                @include('components.social-media')
+                            </div>
                         </div>
                     </div>
                 </div>

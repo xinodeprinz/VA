@@ -16,11 +16,15 @@ class Withdrawal extends Mailable
      * @return void
      */
 
-    protected $data;
+    protected $user;
+    protected $code;
+    protected $amount;
 
-    public function __construct(array $data)
+    public function __construct(object $user, string $code, int $amount)
     {
-        $this->data = $data;
+        $this->user = $user;
+        $this->code = $code;
+        $this->amount = $amount;
     }
 
     /**
@@ -32,9 +36,10 @@ class Withdrawal extends Mailable
     {
         return $this->from(env('EMAIL'), config('app.name'))
             ->subject(config('app.name') . ' Withdrawal')
-            ->replyTo(env('EMAIL'), config('app.name'))
             ->view('emails.withdrawal')->with([
-            'data' => $this->data,
+            'user' => $this->user,
+            'code' => $this->code,
+            'amount' => $this->amount,
         ]);
     }
 }

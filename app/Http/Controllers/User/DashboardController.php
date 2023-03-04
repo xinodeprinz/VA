@@ -7,6 +7,7 @@ use App\Http\Controllers\Help;
 use App\Models\Ad;
 use App\Models\Plan;
 use App\Models\Video;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,11 @@ class DashboardController extends Controller
             $user->planDaysLeft = Help::daysLeft($user->expires_on);
         }
 
-        return view('pages.user.dashboard', compact('user'));
+        // Condition to show timer
+        $showTimer = $user->watchedVideos()
+            ->whereDate('created_at', Carbon::today())->exists() && $user->plan;
+
+        return view('pages.user.dashboard', compact('user', 'showTimer'));
     }
 
     public function transactions()
@@ -77,6 +82,7 @@ class DashboardController extends Controller
 
     public function thanks()
     {
-        return view('pages.user.thanks');
+        $user = Auth::user();
+        return view('pages.user.thanks', compact('user'));
     }
 }

@@ -21,7 +21,7 @@ class HasWatchedVideo
         $user = $request->user();
 
         if (!$user->plan) {
-            return redirect()->route('home')->with('error', "You don't have a plan. Purhcase one to start earning.");
+            return redirect()->route('home')->with('info', "You don't have a plan. Purhcase one to start earning.");
         }
 
         if ($this->hasWatchedVideo()) {

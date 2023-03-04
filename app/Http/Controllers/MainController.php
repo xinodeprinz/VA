@@ -22,7 +22,8 @@ class MainController extends Controller
 
     public function about()
     {
-        return view("pages.about");
+        $video = Video::inRandomOrder()->first();
+        return view("pages.about", compact('video'));
     }
 
     public function plans()

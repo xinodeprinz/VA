@@ -8,9 +8,12 @@
     <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/style.css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+    <!-- Alerts -->
+    @include('components.alerts')
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -53,18 +56,21 @@
                         <div class="section-title">
                             <h1>contact us</h1>
                         </div>
-                        <div><i class="fas fa-envelope"></i> {{ env('EMAIL') }}</div>
-                        <a href="#"><i class="fab fa-telegram"></i> Join Telegram group</a>
+                        <div>
+                            <a href="mailto:{{ env('EMAIL') }}"><i class="fas fa-envelope"></i>
+                                {{ env('EMAIL') }}</a>
+                        </div>
+                        <a href="{{ env('TELEGRAM') }}" target="_blank"><i class="fab fa-telegram"></i> Join Telegram
+                            group</a>
                     </div>
                     <div class="col-sm-6 col-lg-6">
                         <div class="section-title">
-                            <h1>who we are</h1>
+                            <h1>our aim</h1>
                         </div>
                         <p>
-                            Lorem ipsum odit dolores nam, alias consequatur saepe neque,
-                            veritatis esse omnis reprehenderit commodi corrupti blanditiis
-                            expedita ipsum doloremque quaerat molestiae sint. Officia illo
-                            quae distinctio?
+                            We aim to increase our YouTube watch hours and subscribers so as to get paid. Subscribe
+                            to a plan now and start earning money as you watch short YouTube videos of averagely 2
+                            minutes long daily.
                         </p>
                     </div>
                     <div class="col-sm-6 col-lg-3">

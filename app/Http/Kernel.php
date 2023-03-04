@@ -21,7 +21,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\Currency::class,
         \App\Http\Middleware\SecurityHeaders::class,
     ];
 
@@ -68,7 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'block' => \App\Http\Middleware\Block::class,
         'hasWatchedVideos' => \App\Http\Middleware\HasWatchedVideo::class,
-        'advert' => \App\Http\Middleware\Advert::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'expired' => \App\Http\Middleware\Expired::class,
         'myVerify' => \App\Http\Middleware\Verify::class,

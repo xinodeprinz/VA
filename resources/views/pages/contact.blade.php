@@ -23,7 +23,7 @@
                         <div class="icon"><i class="fab fa-telegram"></i></div>
                         <div class="ms-2">
                             <h4>telegram channel</h4>
-                            <a href="{{ env('TELEGRAM') }}">Join Now</a>
+                            <a href="{{ env('TELEGRAM') }}" target="_blank">Join Now</a>
                         </div>
                     </div>
                 </div>

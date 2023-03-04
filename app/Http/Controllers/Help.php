@@ -40,10 +40,11 @@ class Help extends Controller
     {
         $user = Auth::user();
         if ($user->referral) {
-            $user->referral->balance += (
+            $referral = $user->referral()->first();
+            $referral->balance += (
                 (env('REFERRAL_BONUS_PERCENTAGE') * $amount) / 100
             );
-            $user->referral->update();
+            $referral->update();
         }
     }
 }

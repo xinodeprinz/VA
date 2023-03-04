@@ -29,6 +29,7 @@ class MomoController extends Controller
         abort_if(!in_array($type, Help::paymentTypes()), 404);
         $title = $type;
         $plan = null;
+        $user = Auth::user();
         $phone_number = $request->user()->phone_number;
 
         if ($type === 'plan') {
@@ -39,7 +40,9 @@ class MomoController extends Controller
             $plan = Plan::findOrFail($planId);
             $title = $plan->title;
         }
-        return view('pages.user.payment', compact('type', 'plan', 'title', 'phone_number'));
+        return view('pages.user.payment', compact(
+            'type', 'plan', 'title', 'phone_number', 'user'
+        ));
     }
 
     protected function depositHelper(array $data)
@@ -129,7 +132,7 @@ class MomoController extends Controller
 
     public function processDeposit(Request $request)
     {
-        $request->validate(['amount' => 'required|integer|min:1000']);
+        $request->validate(['amount' => 'required|integer|min:100']);
         $user = Auth::user();
 
         $data = [
@@ -162,94 +165,72 @@ class MomoController extends Controller
 
     public function processWithdrawal(Request $request)
     {
-        $request->validate(['amount' => 'required|integer|min:1000']);
-
-        // if (!$this->canWithdraw()) {
-        //     return back()->with('error', 'Withdrawal failed.');
-        // }
-
-        $user = Auth::user();
-
-        // Avoiding overdrafts
-        if ($user->account_balance < $request->amount) {
-            return back()->with('error', 'Overdraft! Insufficient account balance.');
-        }
-
-        $token = $this->randomString(50);
-
-        // Storing relevant info in session.
-        $request->session()->put('withdrawal', [
-            'token' => $token,
-            'amount' => $request->amount,
-        ]);
-
-        Mail::to($user->email)->send(new Withdrawal([
-            'token' => $token,
-            'username' => $user->username,
-        ]));
-
-        return redirect()->route('home')->with('info', 'A withdrawal link has been sent to your email address. Click the link to continue.');
-    }
-
-    public function completeWithdrawal(Request $request, string $token)
-    {
-        if (!$request->session()->has('withdrawal')) {
-            return redirect()->route('home')->with('error', "The link has expired.");
-        }
-
-        $withdrawal = $request->session()->get('withdrawal');
-
-        if ($withdrawal['token'] !== $token) {
-            return abort(403);
+        // Protecting route
+        if (!$request->session()->has('withdrawal_code')) {
+            return redirect()->route('home');
         }
 
         $user = $request->user();
-
-        $withdrawal['phone_number'] = $user->phone_number;
-
+        // Show page
         if ($request->isMethod('GET')) {
-            return view('pages.user.complete-payment', compact('withdrawal'));
+            return view('pages.user.process-withdrawal', compact('user'));
         }
 
-        // Request is method POST
+        // Finalize withdrawal.
+        $request->validate(['code' => 'required|string|size:5']);
+        $code = $request->session()->get('withdrawal_code');
+        $amount = $request->session()->get('amount');
 
-        // if (!$this->canWithdraw()) {
-        //     return redirect()->route('home')->with('error', 'Withdrawal failed.');
-        // }
-
-        if ($withdrawal['amount'] < 1000) {
-            return redirect()->route('home')->with('error', 'The amount should not be less than 1000 frs.');
+        if ($request->code !== $code) {
+            return back()
+                ->onlyInput('code')
+                ->with('error', 'Incorrect code.');
         }
 
-        if ($user->account_balance < $withdrawal['amount']) {
-            return redirect()->route('home')->with('error', 'Overdraft! Insufficient account balance.');
+        // Preventing overdraft
+        if ($user->balance < $amount) {
+            return redirect()->route('home');
         }
 
+        $charges = (env('WITHDRAWAL_CHARGES_PERCENTAGE') * $amount) / 100;
+
+        // Code is correct
         $data = [
-            'amount' => $withdrawal['amount'],
             'phone_number' => $user->phone_number,
+            'amount' => $amount - $charges,
         ];
 
-        $success = $this->withdrawalHelper($data);
+        // Updating user's record and forgetting sessions.
+        $request->session()->forget(['withdrawal_code', 'amount']);
+        $user->update(['balance' => $user->balance - $amount]);
 
+        // Sending money to the user's mobile money.
+        $success = $this->withdrawalHelper($data);
         if (!$success) {
-            return back()->with('error', "Withdrawal failed!");
+            return back()->with('error', "An error occured. Please try again later.");
         }
 
-        $request->session()->forget('withdrawal');
-
-        $user->account_balance -= $withdrawal['amount'];
-        $user->withdrawed_on = $this->withdrawalDates();
-        $user->update();
-
-        $user->transactions()->create([
-            'phone_number' => $user->phone_number,
-            'method' => 'mobile-money',
-            'amount' => $withdrawal['amount'],
-            'type' => 'withdrawal',
-        ]);
-
         return redirect()->route('home')
-            ->with('success', "Your withdrawal of {$withdrawal['amount']} FCFA was successful.");
+            ->with('success', "Your withdrawal of {$amount} FCFA was successful.");
+    }
+
+    public function sendWithdrawalEmail(Request $request)
+    {
+        $user = $request->user();
+        $request->validate(['amount' => "required|integer|min:{$user->plan->min_withdrawal}"]);
+        if ($user->balance < $request->amount) {
+            return back()
+                ->onlyInput('amount')
+                ->with('error', 'Insufficient account balance.');
+        }
+        // Email withdrawal code.
+        $code = Help::verificationCode(5);
+        Mail::to($user->email)->send(new Withdrawal($user, $code, $request->amount));
+        $request->session()->put([
+            'withdrawal_code' => $code,
+            'amount' => $request->amount,
+        ]);
+        return redirect()->route('process-withdrawal')
+            ->with('info', "A withdrawal code has been sent to your email address. Provide the code below to finalize your withdrawal.");
     }
 }

@@ -100,16 +100,18 @@
     <hr />
     <div class="row">
         <!-- Timer -->
-        <div class="col-12">
-            <div class="bg-danger box shadow p-3 d-flex align-items-center justify-content-center">
-                <div class="icon clock-icon text-danger">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="ms-2">
-                    <h4>time to next watch</h4>
-                    <div>10h 40m 21s</div>
+        @if ($showTimer)
+            <div class="col-12">
+                <div class="bg-danger box shadow p-3 d-flex align-items-center justify-content-center">
+                    <div class="icon clock-icon text-danger">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="ms-2">
+                        <h4>time to next watch</h4>
+                        <div id="show-time"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection

@@ -15,28 +15,30 @@
         </span>
     </p>
 
-    <table class="table table-bordered mt-4" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach ($user->referrals as $id => $r)
+    <div class="table-responsive">
+        <table class="table table-bordered mt-4" id="dataTable" width="100%" cellspacing="0">
+            <thead>
                 <tr>
-                    <td>{{ ++$id }}</td>
-                    <td class="text-capitalize">{{ $r->username }}</td>
-                    <td>{{ $r->email }}</td>
-                    <td>+237{{ $r->phone_number }}</td>
-                    <td>{{ Carbon\Carbon::parse($r->created_at)->format('d/m/Y') }}</td>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date</th>
                 </tr>
-            @endforeach
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+                @foreach ($user->referrals as $id => $r)
+                    <tr>
+                        <td>{{ ++$id }}</td>
+                        <td class="text-capitalize">{{ $r->username }}</td>
+                        <td>{{ $r->email }}</td>
+                        <td>+237{{ $r->phone_number }}</td>
+                        <td>{{ Carbon\Carbon::parse($r->created_at)->format('d/m/Y') }}</td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
 @endsection

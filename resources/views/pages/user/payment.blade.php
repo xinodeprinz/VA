@@ -23,6 +23,11 @@
                         <div class="mb-3 amount-bar">Tel:
                             <span>(+237) {{ $phone_number }}</span>
                         </div>
+                        @if ($type === 'withdrawal')
+                            <div class="mb-3 amount-bar">Min withdrawal:
+                                <span>{{ number_format($user->plan->min_withdrawal, 0) }} FCFA</span>
+                            </div>
+                        @endif
                         <form action="{{ route('momo-' . $type) }}" method="POST">
                             @csrf
                             @if ($type !== 'plan')
