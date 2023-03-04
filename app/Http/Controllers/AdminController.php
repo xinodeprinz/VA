@@ -26,21 +26,22 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
         $user->is_blocked = $user->is_blocked ? false : true;
+        $mess = $user->is_blocked ? 'blocked' : 'unblocked';
         $user->update();
 
-        return redirect()->route('admin.users')->with('success', 'User blocked!');
+        return redirect()->route('admin.users')->with('success', "User {$mess}!");
     }
 
     public function deleteUser($id)
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
@@ -60,7 +61,7 @@ class AdminController extends Controller
     {
         try {
             $ad = Ad::findOrFail($id);
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return redirect()->route('admin.ads')->with('error', 'Ad not found.');
         }
 

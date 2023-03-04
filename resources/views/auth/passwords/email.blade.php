@@ -3,7 +3,7 @@
 @section('content')
     @include('components.jumbo', ['title' => 'Forgot your password'])
 
-    <div id="contact" class="contact mt-5">
+    <div id="contact" class="contact my-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">

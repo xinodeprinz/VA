@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Contact;
 use App\Models\Plan;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -11,18 +12,12 @@ class MainController extends Controller
 {
     public function index()
     {
-        $plans = Plan::limit(3)->get();
-        $dp = 0;
-
-        if (session('currency') === 'USD') {
-            $dp = 2;
-            foreach ($plans as $plan) {
-                $plan->amount = $plan->amount / env('EXCHANGE_RATE');
-                $plan->ad_cost = $plan->ad_cost / env('EXCHANGE_RATE');
-            }
+        $plans = Plan::limit(4)->get();
+        $video = Video::inRandomOrder()->first();
+        foreach ($plans as $plan) {
+            $plan->total_earn = $plan->videos * $plan->video_cost * $plan->duration;
         }
-
-        return view("pages.index", compact('plans', 'dp'));
+        return view("pages.index", compact('plans', 'video'));
     }
 
     public function about()
@@ -32,19 +27,11 @@ class MainController extends Controller
 
     public function plans()
     {
-        $plans = Plan::all();
-
-        $dp = 0;
-
-        if (session('currency') === 'USD') {
-            $dp = 2;
-            foreach ($plans as $plan) {
-                $plan->amount /= env('EXCHANGE_RATE');
-                $plan->ad_cost /= env('EXCHANGE_RATE');
-            }
+        $plans = Plan::paginate(8);
+        foreach ($plans as $plan) {
+            $plan->total_earn = $plan->videos * $plan->video_cost * $plan->duration;
         }
-
-        return view("pages.plans", compact('plans', 'dp'));
+        return view("pages.plans", compact('plans'));
     }
 
     public function contact(Request $request)
@@ -77,5 +64,22 @@ class MainController extends Controller
         session(['currency' => $request->currency]);
 
         return back()->with('success', "Currency changed to {$request->currency}.");
+    }
+
+    public function paymentMethod(Request $request)
+    {
+        $request->validate([
+            'method' => 'required|integer',
+        ]);
+
+        $id = $request->input('method');
+
+        if (!in_array($id, [0, 1, 2, 3, 4, 5])) {
+            return back()->with('error', 'Invalid payment method');
+        }
+
+        $request->session()->put('method', $id);
+
+        return back();
     }
 }

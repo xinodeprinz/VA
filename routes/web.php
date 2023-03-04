@@ -7,7 +7,6 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MomoController;
-use App\Http\Controllers\User\PayPalController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/register/{referral?}', [RegisterController::class, 'showRegistrationForm']);
+Route::get('/register/{referral?}', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Auth::routes();
 
@@ -40,6 +39,12 @@ Route::controller(EmailController::class)
         Route::post('/email/verification-notification', 'notification')
             ->middleware(['auth', 'throttle:6,1'])
             ->name('verification.send');
+        Route::post('/code/resend', 'resendCode')
+            ->middleware('auth')
+            ->name('resend-code');
+        Route::post('/code/verify', 'verifyUser')
+            ->middleware('auth')
+            ->name('verify-code');
     });
 
 // MainController Routes
@@ -50,71 +55,48 @@ Route::controller(MainController::class)->group(function () {
     Route::match(['GET', 'POST'], '/contact', 'contact')->name('contact');
     Route::get('/terms-and-conditions', 'terms')->name('terms');
     Route::post('/currency', 'currency')->name('currency');
+    Route::post('/payment-method', 'paymentMethod')->name('payment-method');
 });
 
 Route::controller(DashboardController::class)
-    ->middleware(['auth', 'verified', 'block'])
+    ->middleware(['auth', 'myVerify', 'block', 'expired'])
     ->group(function () {
         Route::get('/dashboard', 'index')->name('home');
-        Route::get('/history/deposit', 'depositHistory')->name('deposit-history');
-        Route::get('/history/withdrawal', 'withdrawalHistory')->name('withdrawal-history');
+        Route::get('/transactions/history', 'transactions')->name('transactions');
         Route::get('/referrals', 'referrals')->name('referrals');
         Route::match(['GET', 'POST'], '/adverts', 'adverts')->name('adverts');
+        Route::get('/video/thanks', 'thanks')->name('thanks');
 
-        Route::middleware('hasClickedAds')->group(function () {
-            Route::get('/ads', 'ads')->name('ads');
-            Route::post('/ads', 'toShowAd')->name('ads');
-            Route::get('/ads/{id}', 'showAd')->name('show-ad');
-            Route::post('/process-ad', 'processAd')->name('process-ad');
-        });
-
-        Route::middleware('advert')->group(function () {
-            Route::match(['GET', 'POST'], '/advert/create', 'createAdvert')->name('create-advert');
-            Route::post('/upload/image', 'uploadImage')->name('image-upload');
-        });
+        Route::middleware('hasWatchedVideos')
+            ->prefix('video')
+            ->group(function () {
+                Route::get('/', 'video')->name('video');
+                Route::post('/process-ad', 'processAd')->name('process-ad');
+            });
     });
 
 Route::controller(MomoController::class)
-    ->middleware(['auth', 'verified', 'block'])
-    ->prefix('mobile-money')
+    ->middleware(['auth', 'myVerify', 'block', 'withdraw'])
+    ->prefix('momo')
     ->group(function () {
         // Show payment pages
-        Route::get('/deposit', 'deposit')->name('momo-deposit');
-        Route::get('/withdrawal', 'withdrawal')->name('momo-withdrawal');
-        Route::get('/plan', 'plan')->name('momo-plan');
+        Route::get('/{type}', 'show')->name('momo');
         // Process payments
         Route::post('/deposit', 'processDeposit')->name('momo-deposit');
         Route::post('/withdrawal', 'processWithdrawal')->name('momo-withdrawal');
+        Route::match(['GET', 'POST'], '/withdrawal/{token}', 'completeWithdrawal')->name('complete-momo-withdrawal');
         Route::post('/plan', 'processPlan')->name('momo-plan');
     });
 
-Route::controller(PayPalController::class)
-    ->middleware(['auth', 'verified', 'block'])
-    ->prefix('paypal')
-    ->group(function () {
-        // Show payment pages
-        Route::get('/deposit', 'deposit')->name('paypal-deposit');
-        Route::get('/withdrawal', 'withdrawal')->name('paypal-withdrawal');
-        Route::get('/plan', 'plan')->name('paypal-plan');
-
-        // Process payments
-        Route::post('/deposit', 'processDeposit')->name('paypal-deposit');
-        Route::post('/withdrawal', 'processWithdrawal')->name('paypal-withdrawal');
-        Route::post('/plan', 'processPlan')->name('paypal-plan');
-
-        Route::get('/success/{type}', 'success')->name('success');
-        Route::get('/error/{type}', 'getError')->name('error');
-    });
-
 Route::controller(PlanController::class)
-    ->middleware(['auth', 'verified', 'block'])
+    ->middleware(['auth', 'myVerify', 'block'])
     ->group(function () {
         Route::post('/buy-plan', 'buyPlan')->name('buy-plan');
     });
 
 Route::controller(AdminController::class)
     ->prefix('admin')
-    ->middleware(['auth', 'verified', 'block', 'admin'])
+    ->middleware(['auth', 'myVerify', 'block', 'admin'])
     ->group(function () {
         Route::get('/users', 'users')->name('admin.users');
         Route::delete('/users/{id}', 'deleteUser')->name('user.delete');

@@ -3,108 +3,87 @@
 @section('content')
     @include('components.jumbo', ['title' => 'Contact us'])
 
-    <main id="main">
-
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title">
-                    <h2>Get in touch</h2>
-                    <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                        fugiat sit in iste officiis commodi
-                        quidem hic quas.</p>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-lg-5 d-flex align-items-stretch">
-                        <div class="info">
-                            <div class="address">
-                                <i class="bi bi-geo-alt"></i>
-                                <h4>Location:</h4>
-                                <p>{{ env('LOCATION') }}</p>
-                            </div>
-
-                            <div class="email">
-                                <i class="bi bi-envelope"></i>
-                                <h4>Email:</h4>
-                                <p>{{ env('EMAIL') }}</p>
-                            </div>
-
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Call:</h4>
-                                <p>{{ env('PHONE1') }}</p>
-                            </div>
-
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                                frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                        <form action="{{ route('contact') }}" method="post" role="form" class="php-email-form">
-                            @csrf
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="name">Your Name</label>
-                                    <input type="text" name="name" value="{{ old('name') }}"
-                                        class="form-control @error('name')
-                                    is-invalid
-                                    @enderror"
-                                        id="name">
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="name">Your Email</label>
-                                    <input type="text"
-                                        class="form-control @error('email')
-                                    is-invalid
-                                    @enderror"
-                                        name="email" id="email">
-                                    @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Subject</label>
-                                <input type="text"
-                                    class="form-control @error('subject')
-                                is-invalid
-                                @enderror"
-                                    name="subject" id="subject">
-                                @error('subject')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Message</label>
-                                <textarea
-                                    class="form-control @error('message')
-                                is-invalid
-                                @enderror"
-                                    name="message" rows="10"></textarea>
-                                @error('message')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
-                        </form>
-                    </div>
-
-                </div>
-
+    <div class="contact mt-4">
+        <div class="container">
+            <div class="section-title text-center">
+                <h1>stay connected</h1>
             </div>
-        </section>
-        <!-- End Contact Section -->
-
-    </main>
-    <!-- End #main -->
+            <div class="row">
+                <div class="col-lg-4 mb-3">
+                    <div class="shadow contact-box p-3 d-flex align-items-center">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div class="ms-2">
+                            <h4>email us</h4>
+                            <a href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="shadow contact-box p-3 d-flex align-items-center">
+                        <div class="icon"><i class="fab fa-telegram"></i></div>
+                        <div class="ms-2">
+                            <h4>telegram channel</h4>
+                            <a href="{{ env('TELEGRAM') }}">Join Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <div class="shadow contact-box p-3 d-flex align-items-center">
+                        <div class="icon"><i class="fas fa-business-time"></i></div>
+                        <div class="ms-2">
+                            <h4>business hours</h4>
+                            <div class="text">Everyday (24/7)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form -->
+            <div class="form">
+                <form action="{{ route('contact') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" value="{{ old('name') }}" placeholder="Name" name="name"
+                                class="form-control @error('name')
+                                    is-invalid
+                                @enderror" />
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" placeholder="Email" value="{{ old('email') }}" name="email"
+                                class="form-control @error('email')
+                                is-invalid
+                            @enderror" />
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" placeholder="Subject" value="{{ old('subject') }}" name="subject"
+                                class="form-control @error('subject')
+                                is-invalid
+                            @enderror" />
+                            @error('subject')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="message" cols="30" rows="10" placeholder="Message"
+                                class="form-control @error('message')
+                            is-invalid
+                        @enderror">{{ old('message') }}</textarea>
+                            @error('message')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-main" type="submit">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

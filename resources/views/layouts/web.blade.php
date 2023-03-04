@@ -2,188 +2,93 @@
 <html lang="en">
 
 <head>
-
-    @include('components.meta')
-
-
-
-    <!-- Favicons -->
-    @include('components.favicons')
-
-
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="/web/vendor/aos/aos.css" rel="stylesheet">
-    <link href="/web/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/web/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/web/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/web/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="/web/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/web/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="/web/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: Arsha - v4.9.0
-  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ config('app.name') }}</title>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-
-    {{-- Content enters here --}}
-    @include('components.alerts')
-
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top ">
-        <div class="container d-flex align-items-center">
-
-            <h1 class="logo me-auto">
-                <a href="index.html">
-                    <img src="/storage/images/logo.jpg" alt="Money Adds Logo">
-                    <span class="ms-2">{{ config('app.name') }}</span>
-                </a>
-            </h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo me-auto"><img src="/web/img/logo.png" alt="" class="img-fluid"></a>-->
-
-            <nav id="navbar" class="navbar">
-                <ul>
-                    @foreach (['index', 'about', 'plans', 'contact'] as $page)
-                        <li class="text-capitalize">
-                            <?php
-                            $active = '';
-                            if (($page === 'index' && request()->is('/')) || ($page !== 'index' && request()->is($page))) {
-                                $active = 'active';
-                            }
-                            
-                            ?>
-                            <a class="nav-link scrollto {{ $active }}"
-                                href="{{ route($page) }}">{{ $page === 'index' ? 'home' : $page }}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('index') }}">
+                <img src="/storage/images/logo.jpg" alt="{{ config('app.name') }}" class="logo" />
+                <span>{{ config('app.name') }}</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @foreach (['home', 'about', 'plans', 'contact'] as $item)
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs($item) || (request()->routeIs('index') && $item === 'home') ? 'active' : '' }}"
+                                href="{{ $item === 'home' ? '/' : route($item) }}">{{ $item }}
                             </a>
                         </li>
                     @endforeach
-
-                    <li class="text-capitalize">
-                        <a class="getstarted scrollto" href="{{ route('login') }}">
-                            {{ Auth::check() ? 'Dashboard' : 'Login' }}
-                        </a>
-                    </li>
-
-                    {{-- Currency --}}
-                    <li class="nav-item ms-3">
-                        <form action="{{ route('currency') }}" method="POST" id="currency-form">
-                            @csrf
-                            <select name="currency" class="form-control" onchange="changeCurrency()"
-                                style="cursor: pointer">
-                                @foreach (['USD', 'FCFA'] as $currency)
-                                    <option value="{{ $currency }}"
-                                        {{ session('currency') === $currency ? 'selected' : '' }}>
-                                        {{ $currency }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
+                    <li class="nav-item">
+                        <a class="btn btn-sec"
+                            href="{{ route('login') }}">{{ Auth::check() ? 'Dashboard' : 'Login' }}</a>
                     </li>
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-            <!-- .navbar -->
-
+            </div>
         </div>
-    </header>
-    <!-- End Header -->
+    </nav>
+    <!-- End of navbar -->
 
     @yield('content')
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-
-        <div class="footer-top">
+    <!-- Footer -->
+    <footer class="footer mt-4">
+        <div class="widget pt-4">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-lg-3 col-md-6 footer-contact">
-                        <h3>{{ config('app.name') }}</h3>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="section-title">
+                            <h1>contact us</h1>
+                        </div>
+                        <div><i class="fas fa-envelope"></i> {{ env('EMAIL') }}</div>
+                        <a href="#"><i class="fab fa-telegram"></i> Join Telegram group</a>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="section-title">
+                            <h1>who we are</h1>
+                        </div>
                         <p>
-                            <strong>Location:</strong> {{ env('LOCATION') }}<br><br>
-                            <strong>Phone:</strong> {{ env('PHONE1') }}<br>
-                            <strong>Email:</strong> {{ env('EMAIL') }}<br>
+                            Lorem ipsum odit dolores nam, alias consequatur saepe neque,
+                            veritatis esse omnis reprehenderit commodi corrupti blanditiis
+                            expedita ipsum doloremque quaerat molestiae sint. Officia illo
+                            quae distinctio?
                         </p>
                     </div>
-
-                    <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Useful Links</h4>
-                        <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Our Services</h4>
-                        <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Our Social Networks</h4>
-                        <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-                        <div class="social-links mt-3">
-                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="section-title">
+                            <h1>useful links</h1>
                         </div>
+                        <ul>
+                            <li><a href="{{ route('register') }}">register</a></li>
+                            <li><a href="{{ route('home') }}">my account</a></li>
+                            <li><a href="{{ route('plans') }}">buy plan</a></li>
+                            <li><a href="{{ route('momo-deposit') }}">deposit</a></li>
+                        </ul>
                     </div>
-
                 </div>
             </div>
         </div>
-
-        <div class="container footer-bottom clearfix">
-            <div class="text-center">
-                &copy; Copyright <strong><span>{{ config('app.name') }}</span></strong>. All Rights Reserved
-            </div>
+        <div class="copyright py-3">
+            {{ config('app.name') }} &copy; {{ \Carbon\Carbon::now()->format('Y') }} all rights reserved.
         </div>
     </footer>
-    <!-- End Footer -->
-
-    <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="/web/vendor/aos/aos.js"></script>
-    <script src="/web/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/web/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="/web/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="/web/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="/web/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="/account/vendor/jquery/jquery.min.js"></script>
+    <!-- End of footer -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/all.js"></script>
     <script src="/js/functions.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="/web/js/main.js"></script>
-
-    @include('sweetalert::alert')
-
 </body>
 
 </html>

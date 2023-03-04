@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Currency::class,
+        \App\Http\Middleware\SecurityHeaders::class,
     ];
 
     /**
@@ -66,8 +67,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'block' => \App\Http\Middleware\Block::class,
-        'hasClickedAds' => \App\Http\Middleware\HasClickedAds::class,
+        'hasWatchedVideos' => \App\Http\Middleware\HasWatchedVideo::class,
         'advert' => \App\Http\Middleware\Advert::class,
         'admin' => \App\Http\Middleware\Admin::class,
+        'expired' => \App\Http\Middleware\Expired::class,
+        'myVerify' => \App\Http\Middleware\Verify::class,
+        'withdraw' => \App\Http\Middleware\Withdraw::class,
     ];
 }

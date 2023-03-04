@@ -19,3 +19,14 @@
         </div>
     </div>
 @endif
+
+@if (session('info'))
+    <div style="position:fixed;bottom:4rem;right:1rem;z-index:1">
+        <div class="alert alert-yoo alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+@endif

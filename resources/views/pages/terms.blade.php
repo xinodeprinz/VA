@@ -51,11 +51,11 @@
                 <h2 class="fs-4 text-capitalize text-money">What you shouldn’t do:</h2>
                 <p>
                 <ul class="terms-points">
-                    <li><i class="ri-check-double-line"></i> create and/or use multiple Accounts (i.e. only one Account is
+                    <li><i class="ri-check-double-line"></i> Create and/or use multiple Accounts (i.e. only one Account is
                         permitted per person);
 
                     </li>
-                    <li><i class="ri-check-double-line"></i> communicate with our customer support representatives in a
+                    <li><i class="ri-check-double-line"></i> Communicate with our customer support representatives in a
                         disrespectful, belligerent or inappropriate manner;
                     </li>
                 </ul>

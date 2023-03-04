@@ -3,106 +3,105 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Help;
+use App\Mail\Withdrawal;
+use App\Models\Plan;
+use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Malico\MeSomb\Deposit;
-use Malico\MeSomb\Payment;
+use Illuminate\Support\Facades\Mail;
+use MeSomb\Operation\PaymentOperation;
+use MeSomb\Signature;
 
 class MomoController extends Controller
 {
-    public function deposit()
+
+    protected $client;
+
+    public function __construct()
     {
-        $data = (object) [
-            'title' => 'deposit',
-            'isMomo' => true,
-            'type' => 'deposit',
-            'btnText' => 'Deposit Now',
-        ];
-        return view('pages.user.payment', compact('data'));
+        $this->client = new PaymentOperation(env('MESOMB_APP'), env('MESOMB_ACCESS'), env('MESOMB_SECRET'));
     }
 
-    public function withdrawal()
+    public function show(Request $request, $type)
     {
-        $user = Auth::user();
+        abort_if(!in_array($type, Help::paymentTypes()), 404);
+        $title = $type;
+        $plan = null;
+        $phone_number = $request->user()->phone_number;
 
-        $data = (object) [
-            'title' => 'withdrawal',
-            'isMomo' => true,
-            'type' => 'withdrawal',
-            'btnText' => 'Withdraw Now',
-            'code' => $user->code,
-            'phone_number' => $user->phone_number,
-        ];
-        return view('pages.user.payment', compact('data'));
-    }
-
-    public function plan(Request $request)
-    {
-        if (!$request->session()->has('plan')) {
-            return redirect()->route('plans');
+        if ($type === 'plan') {
+            if (!$request->session()->has('planId')) {
+                return redirect()->route('plans');
+            }
+            $planId = $request->session()->get('planId');
+            $plan = Plan::findOrFail($planId);
+            $title = $plan->title;
         }
-
-        $plan = $request->session()->get('plan');
-
-        $data = (object) [
-            'title' => $plan->title,
-            'isMomo' => true,
-            'type' => 'plan',
-            'btnText' => 'Buy Now',
-            'amount' => $plan->amount,
-        ];
-        return view('pages.user.payment', compact('data'));
+        return view('pages.user.payment', compact('type', 'plan', 'title', 'phone_number'));
     }
 
     protected function depositHelper(array $data)
     {
-        $request = new Payment("+237" . $data['phone_number'], $data['amount']);
-
         try {
-            $payment = $request->pay();
-        } catch (\Throwable$th) {
-            return false;
-        }
-
-        if ($payment->success) {
+            $this->client->makeCollect(
+                $data['amount'],
+                $this->payService($data['phone_number']),
+                $data['phone_number'],
+                new DateTime(),
+                Signature::nonceGenerator()
+            );
             return true;
-        } else {
+        } catch (\Throwable$th) {
             return false;
         }
     }
 
-    protected function withdrawalHelper(array $data)
+    private function payService(string $phone): string
     {
-        $trans = new Deposit($data['phone_number'], $data['amount']);
-        try {
-            $payment = $trans->pay();
-        } catch (\Throwable$th) {
-            return false;
+        if ($phone[1] == 9) {
+            return "ORANGE";
         }
 
-        if ($payment->success) {
+        if ($phone[1] == 5 && $phone[2] > 5) {
+            return "ORANGE";
+        }
+
+        return "MTN";
+    }
+
+    protected function withdrawalHelper(array $data)
+    {
+        try {
+            $this->client->makeDeposit(
+                $data['amount'],
+                $this->payService($data['phone_number']),
+                $data['phone_number'],
+                new DateTime(),
+                Signature::nonceGenerator()
+            );
             return true;
-        } else {
+        } catch (\Throwable$th) {
             return false;
         }
     }
 
     public function processPlan(Request $request)
     {
-        $request->validate(['phone_number' => 'required|string|size:9']);
-
-        if (!$request->session()->has('plan')) {
+        // Protecting route
+        if (!$request->session()->has('planId')) {
             return redirect()->route('plans');
         }
 
-        $plan = $request->session()->get('plan');
+        $planId = $request->session()->get('planId');
+        $plan = Plan::findOrFail($planId);
+        $user = Auth::user();
 
         $data = [
-            'phone_number' => $request->phone_number,
+            'phone_number' => $user->phone_number,
             'amount' => $plan->amount,
         ];
-
-        $user = Auth::user();
 
         $success = $this->depositHelper($data);
 
@@ -111,24 +110,18 @@ class MomoController extends Controller
         }
 
         $user->plan_id = $plan->id;
-        $user->expires_in = $plan->duration;
+        $user->expires_on = Help::planExpiryDate($plan->duration);
         $user->update();
 
-        // Giving 10% to referral
-        if ($user->referral()->exists()) {
-            $referral = $user->referral()->first();
-            $referral->account_balance += (0.1 * $plan->amount);
-            $referral->update();
-        }
+        // Giving referral bonus
+        Help::referralBonus($plan->amount);
 
         $user->transactions()->create([
-            'phone_number' => "+237" . $request->phone_number,
-            'method' => 'mobile-money',
             'amount' => $plan->amount,
             'type' => 'plan',
         ]);
 
-        $request->session()->forget('plan');
+        $request->session()->forget('planId');
 
         return redirect()->route('home')
             ->with('success', "Your plan purchase was successful.");
@@ -136,32 +129,29 @@ class MomoController extends Controller
 
     public function processDeposit(Request $request)
     {
-        $request->validate([
-            'phone_number' => 'required|string|size:9',
-            'amount' => 'required|integer|min:5000',
-        ]);
-
+        $request->validate(['amount' => 'required|integer|min:1000']);
         $user = Auth::user();
 
-        $success = $this->depositHelper($request->all());
+        $data = [
+            'phone_number' => $user->phone_number,
+            'amount' => $request->amount,
+        ];
+
+        $success = $this->depositHelper($data);
 
         if (!$success) {
             return back()->with('error', "Deposit failed!");
         }
 
-        $user->account_balance += $request->amount;
+        // End of processing
+
+        $user->balance += $request->amount;
         $user->update();
 
-        // Giving 10% to referral
-        if ($user->referral()->exists()) {
-            $referral = $user->referral()->first();
-            $referral->account_balance += (0.1 * $request->amount);
-            $referral->update();
-        }
+        // Giving referral bonus
+        Help::referralBonus($request->amount);
 
         $user->transactions()->create([
-            'phone_number' => "+237" . $request->phone_number,
-            'method' => 'mobile-money',
             'amount' => $request->amount,
             'type' => 'deposit',
         ]);
@@ -172,35 +162,72 @@ class MomoController extends Controller
 
     public function processWithdrawal(Request $request)
     {
-        $request->validate(['amount' => 'required|integer|min:1000|max:5000']);
+        $request->validate(['amount' => 'required|integer|min:1000']);
+
+        // if (!$this->canWithdraw()) {
+        //     return back()->with('error', 'Withdrawal failed.');
+        // }
 
         $user = Auth::user();
-
-        // Limiting daily withdrawals to 1;
-        if ($user->has_withdrawn) {
-            return back()->with('error', 'You have already withdrawn today. Wait for tomorrow to place a withdrawal.');
-        }
 
         // Avoiding overdrafts
         if ($user->account_balance < $request->amount) {
             return back()->with('error', 'Overdraft! Insufficient account balance.');
         }
 
-        // Restricting withdrawal for accounts with plans greater than 100,000frs.
-        if ($user->plan()->exists()) {
-            $plan = $user->plan()->first();
+        $token = $this->randomString(50);
 
-            if ($plan->amount > 100000) {
-                return back()->with('error', 'Withdrawal failed!');
-            }
+        // Storing relevant info in session.
+        $request->session()->put('withdrawal', [
+            'token' => $token,
+            'amount' => $request->amount,
+        ]);
+
+        Mail::to($user->email)->send(new Withdrawal([
+            'token' => $token,
+            'username' => $user->username,
+        ]));
+
+        return redirect()->route('home')->with('info', 'A withdrawal link has been sent to your email address. Click the link to continue.');
+    }
+
+    public function completeWithdrawal(Request $request, string $token)
+    {
+        if (!$request->session()->has('withdrawal')) {
+            return redirect()->route('home')->with('error', "The link has expired.");
         }
 
-        // Getting the phone number from the database for better security.
-        $phone_number = '+' . strval($user->code) . $user->phone_number;
+        $withdrawal = $request->session()->get('withdrawal');
+
+        if ($withdrawal['token'] !== $token) {
+            return abort(403);
+        }
+
+        $user = $request->user();
+
+        $withdrawal['phone_number'] = $user->phone_number;
+
+        if ($request->isMethod('GET')) {
+            return view('pages.user.complete-payment', compact('withdrawal'));
+        }
+
+        // Request is method POST
+
+        // if (!$this->canWithdraw()) {
+        //     return redirect()->route('home')->with('error', 'Withdrawal failed.');
+        // }
+
+        if ($withdrawal['amount'] < 1000) {
+            return redirect()->route('home')->with('error', 'The amount should not be less than 1000 frs.');
+        }
+
+        if ($user->account_balance < $withdrawal['amount']) {
+            return redirect()->route('home')->with('error', 'Overdraft! Insufficient account balance.');
+        }
 
         $data = [
-            'amount' => 0.93 * $request->amount,
-            'phone_number' => $phone_number,
+            'amount' => $withdrawal['amount'],
+            'phone_number' => $user->phone_number,
         ];
 
         $success = $this->withdrawalHelper($data);
@@ -209,18 +236,20 @@ class MomoController extends Controller
             return back()->with('error', "Withdrawal failed!");
         }
 
-        $user->account_balance -= $request->amount;
-        $user->has_withdrawn = true;
+        $request->session()->forget('withdrawal');
+
+        $user->account_balance -= $withdrawal['amount'];
+        $user->withdrawed_on = $this->withdrawalDates();
         $user->update();
 
         $user->transactions()->create([
-            'phone_number' => $phone_number,
+            'phone_number' => $user->phone_number,
             'method' => 'mobile-money',
-            'amount' => $request->amount,
+            'amount' => $withdrawal['amount'],
             'type' => 'withdrawal',
         ]);
 
         return redirect()->route('home')
-            ->with('success', "Your withdrawal of {$request->amount} FCFA was successful.");
+            ->with('success', "Your withdrawal of {$withdrawal['amount']} FCFA was successful.");
     }
 }

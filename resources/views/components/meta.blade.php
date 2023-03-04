@@ -4,7 +4,7 @@
 
 <?php
 
-$route = Route::currentRouteName();
+$route = Route::currentRouteName() ?? 'Not Found';
 
 $desc = config('app.name') . ' is a global online community with numerous earning options. Begin earning money right away by clicking on ads.';
 

@@ -3,69 +3,56 @@
 @section('content')
     @include('components.jumbo', ['title' => 'Login'])
 
-    <main id="main">
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title">
-                    <h2>Welcome back</h2>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-6 offset-md-3 mt-5 mt-lg-0 d-flex align-items-stretch">
-                        <form action="{{ route('login') }}" method="post" role="form" class="php-email-form">
+    <div class="login mt-4">
+        <div class="container">
+            <div class="section-title text-center">
+                <h1>welcome back</h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+                    <div class="form">
+                        <form action="{{ route('login') }}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" value="{{ old('email') }}" placeholder="exmaple@gmail.com"
-                                    class="form-control @error('email')
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">+237</div>
+                                <input type="number" placeholder="Phone (MTN or Orange)" value="{{ old('phone_number') }}"
+                                    name="phone_number"
+                                    class="form-control @error('phone_number')
                                     is-invalid
-                                @enderror"
-                                    name="email" id="email" placeholder="">
-                                @error('email')
+                                @enderror" />
+                                @error('phone_number')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password"
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input type="password" placeholder="Password" name="password"
                                     class="form-control @error('password')
                                 is-invalid
-                            @enderror"
-                                    name="password" id="password" placeholder="12345@345">
+                            @enderror" />
+                                <div class="toggle-pass"><i class="fas fa-eye"></i></div>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group checkbox">
-                                <input name="remember" type="checkbox" id="remember_me">
-                                <label for="remember_me">
-                                    Remember me
-                                </label>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="remember" type="checkbox" id="remember" />
+                                    <label class="form-check-label" for="remember">
+                                        Keep me logged in
+                                    </label>
+                                </div>
                             </div>
-                            <button type="submit">Login</button>
+                            <button class="btn btn-main" type="submit">Login</button>
                         </form>
+                        <div class="text-center mt-2">
+                            Don't have an account? <a href="{{ route('register') }}">Register</a>
+                        </div>
                     </div>
-                    <div class="text-center mt-3">
-                        <span>Don't have an account?</span>
-                        <a href="{{ route('register') }}" class="btn-link">Register</a>
-                    </div>
-
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
-
                 </div>
-
             </div>
-        </section>
-        <!-- End Contact Section -->
-
-    </main>
-    <!-- End #main -->
+        </div>
+    </div>
 @endsection

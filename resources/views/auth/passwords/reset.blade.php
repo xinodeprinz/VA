@@ -2,7 +2,7 @@
 
 @section('content')
     @include('components.jumbo', ['title' => 'Reset Password'])
-    <div id="contact" class="contact mt-5">
+    <div id="contact" class="contact mt-5" style="margin-bottom:5rem">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">

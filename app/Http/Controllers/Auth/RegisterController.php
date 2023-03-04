@@ -52,11 +52,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'username' => ['required', 'string', 'min:3', 'max:20', 'unique:users'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'string', 'size:9', 'unique:users'],
             'password' => ['required', 'string', 'min:5'],
-            'country' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'min:5', 'max:15'],
-            'code' => ['required', 'numeric', 'min:1', 'max:999'],
-            'terms' => ['required', 'boolean'],
         ]);
     }
 
@@ -66,30 +63,14 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data, array $others)
+    protected function create(array $data)
     {
         return User::create([
             'email' => $data['email'],
             'username' => $data['username'],
-            'referral' => $others['referral'],
+            'referral' => $data['referral'],
             'password' => Hash::make($data['password']),
-            'country' => $data['country'],
             'phone_number' => $data['phone_number'],
-            'code' => $data['code'],
         ]);
-    }
-
-    public function getCodes($countries)
-    {
-        $codes = [];
-        foreach ($countries as $c) {
-            if (!in_array($c['code'], $codes)) {
-                array_push($codes, $c['code']);
-            }
-        }
-
-        sort($codes);
-
-        return $codes;
     }
 }

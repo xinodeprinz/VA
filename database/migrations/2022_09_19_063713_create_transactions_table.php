@@ -15,12 +15,10 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('phone_number')->nullable();
-            $table->string('email')->nullable();
-            $table->float('amount');
+            $table->integer('amount');
             $table->enum('type', ['deposit', 'withdrawal', 'plan']);
-            $table->enum('method', ['mobile-money', 'paypal']);
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')
+            ->onUpdate('CASCADE')->onDelete('cascade');
             $table->timestamps();
         });
     }

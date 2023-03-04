@@ -6,15 +6,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "coinremitter/laravel": "^0.1.8",
         "fruitcake/laravel-cors": "^2.0",
-        "giggsey/libphonenumber-for-php": "^8.12",
         "guzzlehttp/guzzle": "^7.0.1",
+        "hachther/mesomb": "^1.2",
+        "hachther/mesomb-php": "^2.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "league/omnipay": "^3.2",
-        "malico/laravel-mesomb": "^1.5",
         "monarobase/country-list": "^3.3",
         "omnipay/paypal": "^3.0",
         "realrashid/sweet-alert": "^5.1"

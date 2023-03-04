@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
+class User extends Authenticatable implements CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -22,18 +22,13 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'username',
         'email',
         'password',
-        'code',
-        'account_balance',
-        'photo',
+        'balance',
         'is_admin',
-        'has_withdrawn',
         'phone_number',
         'plan_id',
-        'expires_in',
-        'advert_expires_in',
+        'expires_on',
         'referral',
         'is_blocked',
-        'is_advert',
     ];
 
     /**
@@ -63,14 +58,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->hasMany(Transaction::class);
     }
 
-    public function clickedAds()
+    public function watchedVideos()
     {
-        return $this->hasMany(ClickedAd::class);
+        return $this->hasMany(WatchedVideos::class);
     }
 
     public function plan()
     {
-        return $this->hasOne(Plan::class, 'id', 'plan_id');
+        return $this->belongsTo(Plan::class);
     }
 
     public function referral()

@@ -12,8 +12,9 @@ class Plan extends Model
     protected $fillable = [
         'title',
         'amount',
-        'daily_ads',
-        'ad_cost',
+        'videos',
+        'video_cost',
         'duration',
+        'min_withdrawal',
     ];
 }

@@ -10,13 +10,9 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'phone_number',
         'amount',
         'type',
         'user_id',
-        'has_clicked_ads',
-        'method',
-        'email',
     ];
 
     protected $hidden = [

@@ -17,8 +17,9 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->integer('amount');
-            $table->integer('daily_ads');
-            $table->float('ad_cost', 10, 1);
+            $table->integer('videos');
+            $table->integer('video_cost');
+            $table->integer('min_withdrawal');
             $table->integer('duration');
             $table->timestamps();
         });

@@ -3,71 +3,36 @@
 @section('content')
     @include('components.jumbo', ['title' => 'our plans'])
 
-    <!-- ======= Plans Section ======= -->
-    <section id="pricing" class="pricing">
-        <div class="container" data-aos="fade-up">
-
+    <div class="plans my-4">
+        <div class="container">
             <div class="row">
                 @foreach ($plans as $plan)
-                    <div class="col-md-4 col-sm-6 mb-3" data-aos="fade-up" data-aos-delay="100">
-                        <div class="card shadow">
-                            <div class="card-header bg-money text-white">
-                                <h3 class="text-center fs-2 pt-3 text-capitalize" style="color:white !important">
-                                    {{ $plan->title }}
-                                </h3>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="card">
+                            <div class="card-header py-4">
+                                <div class="title">{{ $plan->title }}</div>
+                                <div class="price">{{ number_format($plan->amount, 0) }} FCFA</div>
                             </div>
-                            <div class="card-body bg-white">
-                                <h5 class="text-money fs-3 text-center">
-                                    {{ session('currency') === 'USD' ? '$' : '' }}
-                                    {{ number_format($plan->amount, $dp, '.', ',') }}
-                                    {{ session('currency') === 'FCFA' ? session('currency') : '' }}</h5>
-                                <ul class="text-capitalize ps-0 ps-sm-4 plan">
-                                    <li><i class="bx bx-check"></i> Daily Ads: <span
-                                            class="text-money fw-bold">{{ $plan->daily_ads }}</span>
-                                    </li>
-                                    <li><i class="bx bx-check"></i> Cost per ad: <span class="text-money fw-bold">
-                                            {{ session('currency') === 'USD' ? '$' : '' }}
-                                            {{ number_format($plan->ad_cost, $dp, '.', ',') }}
-                                            {{ session('currency') === 'FCFA' ? session('currency') : '' }}
-                                        </span>
-                                    </li>
-                                    <li><i class="bx bx-check"></i> Daily earnings: <span class="text-money fw-bold">
-                                            {{ session('currency') === 'USD' ? '$' : '' }}
-                                            {{ number_format($plan->ad_cost * $plan->daily_ads, $dp, '.', ',') }}
-                                            {{ session('currency') === 'FCFA' ? session('currency') : '' }}
-                                        </span></li>
-                                    <li><i class="bx bx-check"></i> Weekly earnings: <span class="text-money fw-bold">
-                                            {{ session('currency') === 'USD' ? '$' : '' }}
-                                            {{ number_format($plan->ad_cost * $plan->daily_ads * 7, $dp, '.', ',') }}
-                                            {{ session('currency') === 'FCFA' ? session('currency') : '' }}
-                                        </span>
-                                    </li>
-                                    <li><i class="bx bx-check"></i> Monthly earnings: <span class="text-money fw-bold">
-                                            {{ session('currency') === 'USD' ? '$' : '' }}
-                                            {{ number_format($plan->ad_cost * $plan->daily_ads * 30, $dp, '.', ',') }}
-                                            {{ session('currency') === 'FCFA' ? session('currency') : '' }}
-                                        </span>
-                                    </li>
-                                    <li><i class="bx bx-check"></i> Validity: <span
-                                            class="text-money fw-bold">{{ $plan->duration }}
-                                            days</span></li>
-                                    <li><i class="bx bx-check"></i> Withdrawal: <span
-                                            class="text-money fw-bold">Automatic</span></li>
-                                </ul>
+                            <div class="card-body">
+                                <div><span>videos per day:</span> {{ $plan->videos }}</div>
+                                <div><span>video cost:</span> {{ number_format($plan->video_cost, 0) }} FCFA</div>
+                                <div>
+                                    <span>duration:</span> {{ $plan->duration }} {{ Str::plural('day', $plan->duration) }}
+                                </div>
+                                <div><span>total earn:</span> {{ number_format($plan->total_earn, 0) }} FCFA</div>
+                                <div><span>withdrawal:</span> automatic</div>
+                                <div><span>min widthdrawal:</span> {{ number_format($plan->min_withdrawal, 0) }} FCFA</div>
                                 <form action="{{ route('buy-plan') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                                    <div class="text-center">
-                                        <button type="submit"
-                                            class="buy-btn bg-money text-white">{{ Auth::check() && Auth::user()->plan_id ? 'Upgrade Now' : 'Buy Now' }}</button>
-                                    </div>
+                                    <button class="btn btn-main text-capitalize w-100 mt-2">subscribe</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
+            {{ $plans->links() }}
         </div>
-    </section>
-    <!-- End Plans Section -->
+    </div>
 @endsection

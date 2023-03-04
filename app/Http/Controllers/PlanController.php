@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
 {
     public function createPlan(Request $request)
     {
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string|unique:plans',
             'amount' => 'required|integer|min:5000',
             'daily_ads' => 'required|integer',
@@ -18,8 +19,14 @@ class PlanController extends Controller
             'duration' => 'required|integer',
         ]);
 
-        Plan::create($data);
-        return response("Plan created!");
+        if ($validator->fails()) {
+            $errors = (array) $validator->getMessageBag();
+            $error = array_values(array_values($errors)[0])[0][0];
+            return response()->json($error, 422);
+        }
+
+        Plan::create($request->all());
+        return response()->json("Plan created", 201);
     }
 
     public function buyPlan(Request $request)
@@ -35,23 +42,16 @@ class PlanController extends Controller
         $user = Auth::user();
 
         // Purchasing plan if the user has sufficient account balance.
-        if ($user->account_balance >= $plan->amount) {
+        if ($user->balance >= $plan->amount) {
             $user->plan_id = $plan->id;
-            $user->expires_in = $plan->duration;
-            $user->account_balance -= $plan->amount;
+            $user->expires_on = Help::planExpiryDate($plan->duration);
+            $user->balance -= $plan->amount;
             $user->update();
-
-            // Giving 10% to referral
-            if ($user->referral()->exists()) {
-                $referral = $user->referral()->first();
-                $referral->account_balance += (0.1 * $plan->amount);
-                $referral->update();
-            }
 
             return redirect()->route('home')->with('success', 'Plan bought successfully.');
         }
 
-        $request->session()->put('plan', $plan);
+        $request->session()->put('planId', $plan->id);
 
         return redirect()->route('momo-plan');
     }
