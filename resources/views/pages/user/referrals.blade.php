@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="section-title">
-        <h1>referrals</h1>
+        <h1>{{ __('main.referrals') }}</h1>
     </div>
     <p class="mb-3 mt-2">
-        Refer people and get {{ env('REFERRAL_BONUS_PERCENTAGE') }}% of every deposit they do.
+        {{ __('main.ref-notice', ['percent' => env('REFERRAL_BONUS_PERCENTAGE') . '%']) }}
     </p>
 
     <p class="mb-0 mt-2 bg-main text-sec p-2 d-flex justify-content-between">
@@ -20,10 +20,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Date</th>
+                    <th>{{ __('main.Username') }}</th>
+                    <th>{{ __('main.Email') }}</th>
+                    <th>{{ __('main.Phone') }}</th>
+                    <th>{{ __('main.date') }}</th>
                 </tr>
             </thead>
             <tbody>

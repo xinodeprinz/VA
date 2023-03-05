@@ -30,7 +30,7 @@
             <header class="dashboard">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container">
-                        <div class="navbar-brand">user dashboard</div>
+                        <div class="navbar-brand">{{ __('main.user dashboard') }}</div>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,8 @@
                                     <ul class="dropdown-menu">
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">Logout</button>
+                                            <button type="submit"
+                                                class="dropdown-item">{{ __('main.Logout') }}</button>
                                         </form>
                                     </ul>
                                 </li>
@@ -67,8 +68,8 @@
             <!-- Footer -->
             <footer class="dash-footer py-3">
                 <div class="container text-center">
-                    {{ config('app.name') }} &copy; copyright {{ \Carbon\Carbon::now()->format('Y') }}, All rights
-                    reserved.
+                    {{ config('app.name') }} &copy; {{ \Carbon\Carbon::now()->format('Y') }}
+                    {{ __('main.all rights reserved.') }}
                 </div>
             </footer>
         </div>

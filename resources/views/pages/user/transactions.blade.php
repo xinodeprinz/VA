@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="section-title">
-        <h1>transaction history</h1>
+        <h1>{{ __('main.transaction history') }}</h1>
     </div>
     @if ($user->transactions->count() > 0)
         <div class="table-responsive">
@@ -10,9 +10,9 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>amount</th>
-                        <th>type</th>
-                        <th>date</th>
+                        <th>{{ __('main.Amount') }}</th>
+                        <th>{{ __('main.type') }}</th>
+                        <th>{{ __('main.date') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
     @else
         <div class="text-center alert alert-success">
             <i class="fas fa-info-circle"></i>
-            You have done no transactions at the moment.
+            {{ __('main.You have done no transactions at the moment.') }}
         </div>
     @endif
 @endsection
