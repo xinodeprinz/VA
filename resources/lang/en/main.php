@@ -65,4 +65,14 @@ return [
     'filling the form on the contact page.' => 'filling the form on the contact page.',
     'how can I support and thank :name for this financial opportunity?' => 'how can I support and thank nde for this financial opportunity?',
     'Support us by watching and subscribing to our social media videos and channels.' => 'Support us by watching and subscribing to our social media videos and channels.',
+    'Join Telegram group' => 'Join Telegram group',
+    'contact us' => 'contact us',
+    'our aim' => 'our aim',
+    'footer-desc' => 'We aim to increase our YouTube watch hours and subscribers so as to get paid. Subscribe
+    to a plan now and start earning money as you watch short YouTube videos of averagely 2
+    minutes long daily.',
+    'useful links' => 'useful links',
+    'buy plan' => 'buy plan',
+    'deposit' => 'deposit',
+    'all rights reserved.' => 'all rights reserved.',
 ];

@@ -66,41 +66,41 @@
                 <div class="row">
                     <div class="col-sm-6 col-lg-3">
                         <div class="section-title">
-                            <h1>contact us</h1>
+                            <h1>{{ __('main.contact us') }}</h1>
                         </div>
                         <div>
-                            <a href="mailto:{{ env('EMAIL') }}"><i class="fas fa-envelope"></i>
+                            <a href="mailto:{{ env('EMAIL') }}" style="text-transform: lowercase"><i
+                                    class="fas fa-envelope"></i>
                                 {{ env('EMAIL') }}</a>
                         </div>
-                        <a href="{{ env('TELEGRAM') }}" target="_blank"><i class="fab fa-telegram"></i> Join Telegram
-                            group</a>
+                        <a href="{{ env('TELEGRAM') }}" target="_blank"><i class="fab fa-telegram"></i>
+                            {{ __('main.Join Telegram group') }}</a>
                     </div>
                     <div class="col-sm-6 col-lg-6">
                         <div class="section-title">
-                            <h1>our aim</h1>
+                            <h1>{{ __('main.our aim') }}</h1>
                         </div>
                         <p>
-                            We aim to increase our YouTube watch hours and subscribers so as to get paid. Subscribe
-                            to a plan now and start earning money as you watch short YouTube videos of averagely 2
-                            minutes long daily.
+                            {{ __('main.footer-desc') }}
                         </p>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="section-title">
-                            <h1>useful links</h1>
+                            <h1>{{ __('main.useful links') }}</h1>
                         </div>
                         <ul>
-                            <li><a href="{{ route('register') }}">register</a></li>
-                            <li><a href="{{ route('home') }}">my account</a></li>
-                            <li><a href="{{ route('plans') }}">buy plan</a></li>
-                            <li><a href="{{ route('momo-deposit') }}">deposit</a></li>
+                            <li><a href="{{ route('register') }}">{{ __('main.register') }}</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('main.dashboard') }}</a></li>
+                            <li><a href="{{ route('plans') }}">{{ __('main.buy plan') }}</a></li>
+                            <li><a href="{{ route('momo-deposit') }}">{{ __('main.deposit') }}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="copyright py-3">
-            {{ config('app.name') }} &copy; {{ \Carbon\Carbon::now()->format('Y') }} all rights reserved.
+            {{ config('app.name') }} &copy; {{ \Carbon\Carbon::now()->format('Y') }}
+            {{ __('main.all rights reserved.') }}
         </div>
     </footer>
     <!-- End of footer -->

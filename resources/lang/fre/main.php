@@ -65,5 +65,13 @@ return [
     'filling the form on the contact page.' => 'remplissant le formulaire de la page contact.',
     'how can I support and thank :name for this financial opportunity?' => 'comment puis-je soutenir et remercier :name pour cette opportunité financière ?',
     'Support us by watching and subscribing to our social media videos and channels.' => 'Soutenez-nous en regardant et en vous abonnant à nos vidéos et chaînes de médias sociaux.',
+    'Join Telegram group' => 'rejoindre le groupe de télégrammes',
+    'contact us' => 'contactez-nous',
+    'our aim' => 'notre but',
+    'footer-desc' => "Nous visons à augmenter nos heures de visionnage YouTube et nos abonnés afin d'être payés. Abonnez-vous à un plan maintenant et commencez à gagner de l'argent en regardant de courtes vidéos YouTube d'une durée moyenne de 2 minutes par jour.",
+    'useful links' => 'Liens utiles',
+    'buy plan' => 'acheter un forfait',
+    'deposit' => 'dépôt',
+    'all rights reserved.' => 'tous les droits sont réservés.',
 
 ];
