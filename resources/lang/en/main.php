@@ -136,4 +136,11 @@ return [
     'date' => 'date',
     'ref-notice' => "Refer people and get :percent of every deposit they do.",
     'Phone' => 'Phone',
+    'forgot password' => 'forgot password',
+    'Send Password Reset Link' => 'Send Password Reset Link',
+    'We have emailed your password reset link!' => 'We have emailed your password reset link!',
+    'Reset Password' => 'Reset Password',
+    'New Password' => 'New Password',
+    'Confirm Password' => 'Confirm Password',
+    'Please confirm your password before continuing.' => 'Please confirm your password before continuing.',
 ];

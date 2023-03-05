@@ -11,4 +11,5 @@ return [
         'string' => 'Le :attribute doit contenir au moins :min caractères.',
     ],
     'Incorrect code.' => 'Code incorrect.',
+    'confirmed' => 'La confirmation :attribute ne correspond pas.',
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.web')
 
 @section('content')
-    @include('components.jumbo', ['title' => 'forgot password'])
+    @include('components.jumbo', ['title' => __('main.forgot password')])
 
     <div id="contact" class="contact my-5">
         <div class="container">
@@ -19,7 +19,8 @@
                             <div class="mb-3">
                                 <input id="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" placeholder="Email Address" autocomplete="email" autofocus>
+                                    value="{{ old('email') }}" placeholder="{{ __('main.Email') }}" autocomplete="email"
+                                    autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +30,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-main">
-                                {{ __('Send Password Reset Link') }}
+                                {{ __('main.Send Password Reset Link') }}
                             </button>
                         </form>
                     @endif

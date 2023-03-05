@@ -1,7 +1,7 @@
 @extends('layouts.web')
 
 @section('content')
-    @include('components.jumbo', ['title' => 'Reset Password'])
+    @include('components.jumbo', ['title' => __('main.Reset Password')])
     <div id="contact" class="contact mt-5" style="margin-bottom:5rem">
         <div class="container">
             <div class="row justify-content-center">
@@ -13,7 +13,7 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="mb-3">
-                            <input id="email" type="email" placeholder="Email Address"
+                            <input id="email" type="email" placeholder="{{ __('main.Email') }}"
                                 class="form-control @error('email') is-invalid @enderror" name="email"
                                 value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
@@ -27,7 +27,7 @@
                         <div class="mb-3">
                             <input id="password" type="password"
                                 class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password" placeholder="New Password">
+                                autocomplete="new-password" placeholder="{{ __('main.New Password') }}">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -38,11 +38,11 @@
 
                         <div class="mb-3">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password" placeholder="Confirm Password">
+                                required autocomplete="new-password" placeholder="{{ __('main.Confirm Password') }}">
                         </div>
 
                         <button type="submit" class="btn btn-main">
-                            {{ __('Reset Password') }}
+                            {{ __('main.Reset Password') }}
                         </button>
                     </form>
                 </div>

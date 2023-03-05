@@ -135,5 +135,12 @@ return [
     'date' => 'date',
     'ref-notice' => "Parrainez des personnes et obtenez :percent de chaque dépôt effectué.",
     'Phone' => 'Téléphone',
+    'forgot password' => 'Mot de passe oublié',
+    'Send Password Reset Link' => 'envoyer le lien de réinitialisation',
+    'We have emailed your password reset link!' => 'Nous avons envoyé votre lien de réinitialisation de mot de passe par e-mail !',
+    'Reset Password' => 'Réinitialiser le mot de passe',
+    'New Password' => 'Nouveau mot de passe',
+    'Confirm Password' => 'Confirmez le mot de passe',
+    'Please confirm your password before continuing.' => 'Veuillez confirmer votre mot de passe avant de continuer.',
 
 ];
