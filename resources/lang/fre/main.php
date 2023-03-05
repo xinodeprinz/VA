@@ -56,5 +56,14 @@ return [
     'fa1-h' => "Une fois que vous avez regardé des vidéos et que vous disposiez de suffisamment d'argent pour le retrait en fonction de votre forfait souscrit, l'étape suivante consiste à le retirer sur votre compte d'argent mobile.",
     'Go to the withdrawal page.' => 'Rendez-vous sur la page de retrait.',
     'fa1-i' => "Saisissez le montant que vous souhaitez retirer ; un code de retrait sera envoyé à votre adresse e-mail. Copiez-le et collez-le dans le champ de saisie. Immédiatement, l'argent sera automatiquement déposé sur votre compte mobile money.",
+    'how can I get in touch with' => 'comment puis-je entrer en contact avec',
+    'fa2-a' => 'Si vous rencontrez un problème, contactez-nous par e-mail en utilisant notre adresse e-mail',
+    'You can also' => 'Vous pouvez également',
+    'join our telegram group' => 'rejoindre notre groupe de télégrammes',
+    'fa2-b' => "afin d'interagir avec nos autres bénéficiaires.",
+    'fa2-c' => "Pour une urgence, contactez-nous rapidement par email en",
+    'filling the form on the contact page.' => 'remplissant le formulaire de la page contact.',
+    'how can I support and thank :name for this financial opportunity?' => 'comment puis-je soutenir et remercier :name pour cette opportunité financière ?',
+    'Support us by watching and subscribing to our social media videos and channels.' => 'Soutenez-nous en regardant et en vous abonnant à nos vidéos et chaînes de médias sociaux.',
 
 ];

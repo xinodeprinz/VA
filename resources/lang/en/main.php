@@ -56,5 +56,13 @@ return [
     'fa1-h' => "Once you've watched videos and had sufficient money for withdrawal based on your subscribed plan, the next step is to withdraw it into your mobile money account.",
     'Go to the withdrawal page.' => 'Go to the withdrawal page.',
     'fa1-i' => 'Enter the amount which you want to withdraw; a withdrawal code will be sent to your email address. Copy it and paste it in the input field. Immediately, the money will be deposited into your mobile money account automatically.',
-
+    'how can I get in touch with' => 'how can I get in touch with',
+    'fa2-a' => 'If you have any problem, get in touch with us via email using our email address',
+    'You can also' => 'You can also',
+    'join our telegram group' => 'join our telegram group',
+    'fa2-b' => 'so as to interact with our other beneficials.',
+    'fa2-c' => 'For a matter of urgency, get in touch with us quickly via email by',
+    'filling the form on the contact page.' => 'filling the form on the contact page.',
+    'how can I support and thank :name for this financial opportunity?' => 'how can I support and thank nde for this financial opportunity?',
+    'Support us by watching and subscribing to our social media videos and channels.' => 'Support us by watching and subscribing to our social media videos and channels.',
 ];

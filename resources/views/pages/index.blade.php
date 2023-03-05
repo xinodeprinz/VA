@@ -122,22 +122,20 @@
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            how can I get in touch with {{ config('app.name') }}?
+                            {{ __('main.how can I get in touch with') }} {{ config('app.name') }}?
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <p>
-                                If you have any problem, get in touch with us via email using our email address <a
-                                    href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>. You can also <a
-                                    href="{{ env('TELEGRAM') }}" target="_blank">join our telegram group</a> so as to
-                                interact with our other beneficials.
+                                {{ __('main.fa2-a') }} <a href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>
+                                {{ __('main.You can also') }} <a href="{{ env('TELEGRAM') }}"
+                                    target="_blank">{{ __('main.join our telegram group') }}</a> {{ __('main.fa2-b') }}
                             </p>
                             <p>
-                                For a matter of urgency, get in touch with us quickly via email by <a
-                                    href="{{ route('contact') }}" target="_blank">filling the form on the contact
-                                    page.</a>
+                                {{ __('main.fa2-c') }} <a href="{{ route('contact') }}"
+                                    target="_blank">{{ __('main.filling the form on the contact page.') }}</a>
                             </p>
                         </div>
                     </div>
@@ -146,13 +144,14 @@
                     <h2 class="accordion-header" id="headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            how can I support and thank {{ config('app.name') }} for this financial opportunity?
+                            {{ __('main.how can I support and thank :name for this financial opportunity?', ['name' => config('app.name')]) }}
                         </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <p>Support us by watching and subscribing to our social media videos and channels.</p>
+                            <p>{{ __('main.Support us by watching and subscribing to our social media videos and channels.') }}
+                            </p>
                             <div class="text-center">
                                 @include('components.social-media')
                             </div>
