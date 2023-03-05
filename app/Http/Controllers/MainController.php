@@ -83,4 +83,10 @@ class MainController extends Controller
 
         return back();
     }
+
+    public function changeLanguage($locale)
+    {
+        session(['locale' => $locale]);
+        return back();
+    }
 }

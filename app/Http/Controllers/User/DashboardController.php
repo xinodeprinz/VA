@@ -49,6 +49,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $video = Video::inRandomOrder()->limit(1)->first();
+        session()->flash('info', "You need to watch the video till the end inorder to be rewarded. If the video doesn't appear, please refresh the page.");
         return view('pages.user.video', compact('video', 'user'));
     }
 

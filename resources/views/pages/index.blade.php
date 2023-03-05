@@ -5,10 +5,10 @@
     <div class="hero">
         <div class="container">
             <h1>Bridon Production LLC</h1>
-            <p>watch our YouTube videos and get paid</p>
+            <p>{{ __('main.watch our YouTube videos and get paid') }}</p>
             <div>
-                <a href="{{ route('register') }}" class="btn btn-main">get started</a>
-                <a href="{{ route('plans') }}" class="btn btn-sec ms-2">our plans</a>
+                <a href="{{ route('register') }}" class="btn btn-main">{{ __('main.get started') }}</a>
+                <a href="{{ route('plans') }}" class="btn btn-sec ms-2">{{ __('main.our plans') }}</a>
             </div>
         </div>
     </div>
@@ -20,20 +20,17 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-title">
-                        <h1>about us</h1>
+                        <h1>{{ __('main.about us') }}</h1>
                     </div>
                     <p>
-                        {{ config('app.name') }} also known as <span class="text-main">Sean Tv</span> is a group of
-                        Cameroonian comedians that act short funny videos and upload them on their social media channels
-                        such as Facebook, YouTube, Instagram and TikTok so as to earn money as people watch and subscribe to
-                        them.
+                        {{ config('app.name') }}{{ __('main.aboutOne') }} <span class="text-main">Sean
+                            Tv</span>{{ __('main.aboutTwo') }}
                     </p>
                     <p>
-                        Our aim is to increase our YouTube watch hours and subscribers so as to get paid. Subscribe to a
-                        plan now and start earning money as you watch videos of this sort daily.
+                        {{ __('main.aboutThree') }}
                     </p>
                     <div class="d-none d-lg-block">
-                        <a href="{{ route('about') }}" class="btn btn-main mb-2">Learn More</a>
+                        <a href="{{ route('about') }}" class="btn btn-main mb-2">{{ __('main.Learn More') }}</a>
                         @include('components.social-media')
                         <hr />
                     </div>
@@ -49,7 +46,7 @@
                 <div class="text-center mb-3">
                     @include('components.social-media')
                 </div>
-                <a href="{{ route('about') }}" class="btn btn-main">Learn More</a>
+                <a href="{{ route('about') }}" class="btn btn-main">{{ __('main.Learn More') }}</a>
                 <hr />
             </div>
         </div>
@@ -59,7 +56,7 @@
     <div class="plans my-4">
         <div class="container">
             <div class="section-title">
-                <h1>plans</h1>
+                <h1>{{ __('main.plans') }}</h1>
             </div>
 
             <div class="row">
@@ -67,29 +64,34 @@
                     <div class="col-sm-6 col-lg-3 mb-3">
                         <div class="card">
                             <div class="card-header py-4">
-                                <div class="title">{{ $plan->title }}</div>
+                                <div class="title">{{ __('main.' . $plan->title) }}</div>
                                 <div class="price">{{ number_format($plan->amount, 0) }} FCFA</div>
                             </div>
                             <div class="card-body">
-                                <div><span>videos per day:</span> {{ $plan->videos }}</div>
-                                <div><span>video cost:</span> {{ number_format($plan->video_cost, 0) }} FCFA</div>
+                                <div><span>{{ __('main.videos per day:') }}</span> {{ $plan->videos }}</div>
+                                <div><span>{{ __('main.video cost:') }}</span> {{ number_format($plan->video_cost, 0) }}
+                                    FCFA</div>
                                 <div>
-                                    <span>duration:</span> {{ $plan->duration }} {{ Str::plural('day', $plan->duration) }}
+                                    <span>{{ __('main.duration:') }}</span> {{ $plan->duration }}
+                                    {{ Str::plural('day', $plan->duration) }}
                                 </div>
-                                <div><span>total earn:</span> {{ number_format($plan->total_earn, 0) }} FCFA</div>
-                                <div><span>withdrawal:</span> automatic</div>
-                                <div><span>widthdrawal charge:</span> {{ env('WITHDRAWAL_CHARGES_PERCENTAGE') }}%</div>
+                                <div><span>{{ __('main.total earn:') }}</span> {{ number_format($plan->total_earn, 0) }}
+                                    FCFA</div>
+                                <div><span>{{ __('main.withdrawal:') }}</span> automatic</div>
+                                <div><span>{{ __('main.widthdrawal charge:') }}</span>
+                                    {{ env('WITHDRAWAL_CHARGES_PERCENTAGE') }}%</div>
                                 <form action="{{ route('buy-plan') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                                    <button class="btn btn-main text-capitalize w-100 mt-2">subscribe</button>
+                                    <button
+                                        class="btn btn-main text-capitalize w-100 mt-2">{{ __('main.subscribe') }}</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-            <a href="{{ route('plans') }}" class="btn btn-main">More Plans</a>
+            <a href="{{ route('plans') }}" class="btn btn-main">{{ __('main.More Plans') }}</a>
             <hr />
         </div>
     </div>
@@ -98,7 +100,7 @@
     <section class="faqs">
         <div class="container">
             <div class="section-title">
-                <h1>frequently asked questions</h1>
+                <h1>{{ __('main.frequently asked questions') }}</h1>
             </div>
 
             <div class="accordion" id="accordionExample">
@@ -106,7 +108,7 @@
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            how do I start earning from {{ config('app.name') }}?
+                            {{ __('main.how do I start earning from') }} {{ config('app.name') }}?
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"

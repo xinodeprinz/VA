@@ -56,6 +56,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/terms-and-conditions', 'terms')->name('terms');
     Route::post('/currency', 'currency')->name('currency');
     Route::post('/payment-method', 'paymentMethod')->name('payment-method');
+    Route::get('/language/{locale}', 'changeLanguage')->name('language.change');
 });
 
 Route::controller(DashboardController::class)

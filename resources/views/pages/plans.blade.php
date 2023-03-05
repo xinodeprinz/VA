@@ -10,7 +10,7 @@
                     <div class="col-sm-6 col-lg-3 mb-3">
                         <div class="card">
                             <div class="card-header py-4">
-                                <div class="title">{{ $plan->title }}</div>
+                                <div class="title">{{ __('main.' . $plan->title) }}</div>
                                 <div class="price">{{ number_format($plan->amount, 0) }} FCFA</div>
                             </div>
                             <div class="card-body">

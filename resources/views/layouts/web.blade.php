@@ -26,13 +26,30 @@
                     @foreach (['home', 'about', 'plans', 'contact'] as $item)
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs($item) || (request()->routeIs('index') && $item === 'home') ? 'active' : '' }}"
-                                href="{{ $item === 'home' ? '/' : route($item) }}">{{ $item }}
+                                href="{{ $item === 'home' ? '/' : route($item) }}">{{ __('main.' . $item) }}
                             </a>
                         </li>
                     @endforeach
                     <li class="nav-item">
-                        <a class="btn btn-sec"
-                            href="{{ route('login') }}">{{ Auth::check() ? 'Dashboard' : 'Login' }}</a>
+                        <a class="btn btn-sec text-capitalize"
+                            href="{{ route('login') }}">{{ Auth::check() ? __('main.dashboard') : __('main.login') }}</a>
+                    </li>
+                    <li class="nav-item dropdown languages">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle">
+                            <img src="/storage/images/{{ App::currentLocale() === 'fre' ? 'french' : 'english' }}.png"
+                                alt="{{ App::currentLocale() === 'fre' ? 'French' : 'UK' }} Flag" class="flag">
+                            <span>{{ App::currentLocale() === 'fre' ? __('main.french') : __('main.english') }}</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="{{ route('language.change', ['locale' => 'en']) }}" class="dropdown-item">
+                                <img src="/storage/images/english.png" alt="UK Flag" class="flag">
+                                <span>{{ __('main.english') }}</span>
+                            </a>
+                            <a href="{{ route('language.change', ['locale' => 'fre']) }}" class="dropdown-item">
+                                <img src="/storage/images/french.png" alt="French Flag" class="flag">
+                                <span>{{ __('main.french') }}</span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -512,7 +512,7 @@ a {
     align-items: center;
 }
 
-.table {
+thead {
     text-transform: capitalize;
 }
 
@@ -531,6 +531,16 @@ thead {
 
 .video {
     --bs-aspect-ratio: 42.8571428571%;
+}
+
+.flag {
+    width: 50px;
+    height: 20px;
+}
+
+.languages {
+    color: var(--bs-sec);
+    text-transform: capitalize;
 }
 
 @media(max-width: 991px) {
