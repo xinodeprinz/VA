@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Help;
-use App\Models\Ad;
 use App\Models\Plan;
 use App\Models\Video;
 use Carbon\Carbon;
@@ -53,27 +52,6 @@ class DashboardController extends Controller
         return view('pages.user.video', compact('video', 'user'));
     }
 
-    public function processAd(Request $request)
-    {
-        $request->validate(['id' => 'required|integer|min:1']);
-        try {
-            $ad = Ad::findOrFail($request->id);
-        } catch (\Throwable$th) {
-            return back()->with('error', 'The selected ad does not exists.');
-        }
-
-        $user = Auth::user();
-
-        $user->clickedAds()->create(['ad_id' => $ad->id]);
-
-        $plan = $user->plan()->first();
-
-        $user->account_balance += $plan->ad_cost;
-        $user->update();
-
-        return redirect()->route('ads')->with('success', 'Ad clicked successfully.');
-    }
-
     public function referrals()
     {
         $user = Auth::user();
@@ -84,5 +62,23 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         return view('pages.user.thanks', compact('user'));
+    }
+
+    public function getRandomVideo()
+    {
+        $video = Video::inRandomOrder()->limit(1)->first();
+        return response()->json($video);
+    }
+
+    public function rewardVideo(Request $request)
+    {
+        $request->validate(['id' => 'required|integer']);
+        $user = $request->user();
+        $video = Video::findOrFail($request->id);
+        // Video is good.
+        $user->watchedVideos()->create(['video_id' => $video->id]);
+        $user->update(['balance' => $user->balance + $user->plan->video_cost]);
+        return redirect()->route('thanks')
+            ->with('success', "You've successfully watched the video and have been rewarded.");
     }
 }

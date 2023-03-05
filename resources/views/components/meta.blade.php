@@ -44,3 +44,7 @@ $route = ucfirst($route);
 <meta property="twitter:description" content="{{ $desc }}" />
 <meta property="twitter:url" content="{{ config('app.url') }}" />
 <meta property="twitter:image" content="{{ config('app.url') }}/storage/images/logo.jpg" />
+
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

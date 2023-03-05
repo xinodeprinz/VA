@@ -529,6 +529,10 @@ thead {
     color: var(--bs-sec);
 }
 
+.video {
+    --bs-aspect-ratio: 42.8571428571%;
+}
+
 @media(max-width: 991px) {
     .navbar .navbar-nav:last-child .active {
         margin-bottom: 1rem;
@@ -537,6 +541,10 @@ thead {
     main {
         margin-top: 5rem !important;
         margin-bottom: 7rem !important;
+    }
+
+    .video {
+        --bs-aspect-ratio: 100%;
     }
 }
 

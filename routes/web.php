@@ -71,8 +71,10 @@ Route::controller(DashboardController::class)
             ->prefix('video')
             ->group(function () {
                 Route::get('/', 'video')->name('video');
-                Route::post('/process-ad', 'processAd')->name('process-ad');
+                Route::post('/reward', 'rewardVideo')->name('video-reward');
             });
+
+        Route::get('/random/video', 'getRandomVideo');
     });
 
 Route::controller(MomoController::class)
