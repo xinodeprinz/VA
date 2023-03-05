@@ -49,7 +49,7 @@ class EmailController extends Controller
 
         if ($code !== $request->code) {
             return back()
-                ->withErrors(['code' => 'Incorrect code.'])
+                ->withErrors(['code' => __('main.Incorrect code.')])
                 ->onlyInput('code');
         }
 
@@ -57,6 +57,6 @@ class EmailController extends Controller
         $user->email_verified_at = new DateTime();
         $user->update();
         $request->session()->forget('code');
-        return redirect()->route('home')->with('success', 'Registration successful.');
+        return redirect()->route('home')->with('success', __('main.Registration successful.'));
     }
 }

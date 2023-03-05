@@ -100,7 +100,7 @@
     <section class="faqs">
         <div class="container">
             <div class="section-title">
-                <h1>{{ __('main.frequently asked questions') }}</h1>
+                <h1 style="font-size:23px !important">{{ __('main.frequently asked questions') }}</h1>
             </div>
 
             <div class="accordion" id="accordionExample">

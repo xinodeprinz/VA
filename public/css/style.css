@@ -269,6 +269,7 @@ body {
     color: var(--bs-sec);
     margin-bottom: 0;
     font-weight: 600;
+    font-size: 20px;
 }
 
 .contact-box a {
