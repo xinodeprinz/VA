@@ -8,18 +8,18 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
 
-                    <div class="section-title">
-                        <h2 style="font-size:20px">{{ __('Please confirm your password before continuing.') }}</h2>
+                    <div class="section-title text-center">
+                        <h1 style="font-size:17px !important">{{ __('Please confirm your password before continuing.') }}
+                        </h1>
                     </div>
 
-                    <form method="POST" class="php-email-form" action="{{ route('password.confirm') }}">
+                    <form method="POST" action="{{ route('password.confirm') }}">
                         @csrf
 
-                        <div class="form-group">
-                            <label for="password">{{ __('Password') }}</label>
+                        <div class="mb-3">
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="current-password">
+                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                autocomplete="current-password" placeholder="Password">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -28,15 +28,17 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Confirm Password') }}
-                        </button>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <button type="submit" class="btn btn-main">
+                                {{ __('Confirm Password') }}
+                            </button>
 
-                        @if (Route::has('password.request'))
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
-                            </a>
-                        @endif
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            @endif
+                        </div>
                     </form>
                 </div>
             </div>

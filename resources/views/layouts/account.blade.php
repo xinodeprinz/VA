@@ -4,6 +4,7 @@
 
 <head>
     @include('components.meta')
+    @include('components.favicons')
 </head>
 
 <body>

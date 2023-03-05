@@ -71,7 +71,9 @@ Route::controller(DashboardController::class)
             ->prefix('video')
             ->group(function () {
                 Route::get('/', 'video')->name('video');
-                Route::post('/reward', 'rewardVideo')->name('video-reward');
+                Route::post('/reward', 'rewardVideo')
+                    ->middleware('throttle:1,60') //1 request per hour.
+                    ->name('video-reward');
             });
 
         Route::get('/random/video', 'getRandomVideo');

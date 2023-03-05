@@ -6,19 +6,16 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="section-title">
-                        <h2>Reset Password</h2>
-                    </div>
 
-                    <form method="POST" class="php-email-form" action="{{ route('password.update') }}">
+                    <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group">
-                            <label for="email">{{ __('Email Address') }}</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                        <div class="mb-3">
+                            <input id="email" type="email" placeholder="Email Address"
+                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -27,11 +24,10 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="password">{{ __('Password') }}</label>
+                        <div class="mb-3">
                             <input id="password" type="password"
                                 class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password">
+                                autocomplete="new-password" placeholder="New Password">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -40,14 +36,12 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm">{{ __('Confirm Password') }}</label>
-
+                        <div class="mb-3">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password">
+                                required autocomplete="new-password" placeholder="Confirm Password">
                         </div>
 
-                        <button type="submit">
+                        <button type="submit" class="btn btn-main">
                             {{ __('Reset Password') }}
                         </button>
                     </form>

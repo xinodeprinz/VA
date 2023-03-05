@@ -6,14 +6,11 @@
             <h1>video progress</h1>
         </div>
     </div>
-    <div class="progress mb-2">
+    <div class="progress mb-4 mb-lg-2">
         <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar"
             aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100" id="video-progress">
         </div>
     </div>
-    {{-- <div class="ratio video">
-        <iframe src="https://www.youtube.com/embed/{{ $video->url }}" title="YouTube video" allowfullscreen></iframe>
-    </div> --}}
     <div id="player-container">
         <div id="player"></div>
     </div>

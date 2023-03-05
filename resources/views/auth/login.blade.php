@@ -45,7 +45,10 @@
                                     </label>
                                 </div>
                             </div>
-                            <button class="btn btn-main" type="submit">Login</button>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button class="btn btn-main" type="submit">Login</button>
+                                <a href="{{ route('password.request') }}" class="text-capitalize">forgot password?</a>
+                            </div>
                         </form>
                         <div class="text-center mt-2">
                             Don't have an account? <a href="{{ route('register') }}">Register</a>
