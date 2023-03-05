@@ -142,5 +142,10 @@ return [
     'New Password' => 'Nouveau mot de passe',
     'Confirm Password' => 'Confirmez le mot de passe',
     'Please confirm your password before continuing.' => 'Veuillez confirmer votre mot de passe avant de continuer.',
+    'site-desc' => "Abonnez-vous à un plan maintenant et commencez à gagner de l'argent en regardant de courtes vidéos YouTube d'une durée moyenne de 2 minutes par jour.",
+    'Not Found' => 'Pas trouvé',
+    'go to homepage' => "aller à la page d'accueil",
+    "Opps!! The page you're looking for does not exists." => "Ouf !! La page que vous recherchez n'existe pas.",
+    'page not found' => 'Page non trouvée',
 
 ];

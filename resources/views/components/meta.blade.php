@@ -4,9 +4,9 @@
 
 <?php
 
-$route = Route::currentRouteName() ?? 'Not Found';
+$route = Route::currentRouteName() ?? __('main.Not Found');
 
-$desc = env('APP_DESC');
+$desc = __('main.site-desc');
 
 if ($route === 'index') {
     $route = 'Home';

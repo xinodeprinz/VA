@@ -143,4 +143,9 @@ return [
     'New Password' => 'New Password',
     'Confirm Password' => 'Confirm Password',
     'Please confirm your password before continuing.' => 'Please confirm your password before continuing.',
+    'site-desc' => "Subscribe to a plan now and start earning money as you watch short YouTube videos of averagely 2 minutes long daily.",
+    'Not Found' => 'Not Found',
+    'go to homepage' => 'go to homepage',
+    "Opps!! The page you're looking for does not exists." => "Opps!! The page you're looking for does not exists.",
+    'page not found' => 'page not found',
 ];
