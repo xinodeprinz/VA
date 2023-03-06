@@ -50,38 +50,12 @@ class MainController extends Controller
 
         Mail::to(env('EMAIL'))->send(new Contact($data));
 
-        return back()->with('success', 'Your message has been successfully emailed to us.');
+        return back()->with('success', __('main.Your message has been successfully emailed to us.'));
     }
 
     public function terms()
     {
         return view('pages.terms');
-    }
-
-    public function currency(Request $request)
-    {
-        $request->validate(['currency' => 'required|string|min:3|max:4']);
-
-        session(['currency' => $request->currency]);
-
-        return back()->with('success', "Currency changed to {$request->currency}.");
-    }
-
-    public function paymentMethod(Request $request)
-    {
-        $request->validate([
-            'method' => 'required|integer',
-        ]);
-
-        $id = $request->input('method');
-
-        if (!in_array($id, [0, 1, 2, 3, 4, 5])) {
-            return back()->with('error', 'Invalid payment method');
-        }
-
-        $request->session()->put('method', $id);
-
-        return back();
     }
 
     public function changeLanguage($locale)

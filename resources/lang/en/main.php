@@ -156,5 +156,17 @@ return [
     'Verify Email Address' => 'Verify Email Address',
     'A fresh verification link has been sent to your email address.' => 'A fresh verification link has been sent to your email address.',
     'Code sent successfully. Check your email address.' => 'Code sent successfully. Check your email address.',
-
+    'Your message has been successfully emailed to us.' => 'Your message has been successfully emailed to us.',
+    'The selected plan does not exists.' => 'The selected plan does not exists.',
+    'Plan bought successfully.' => 'Plan bought successfully.',
+    'video-info' => "You need to watch the video till the end inorder to be rewarded. If the video doesn't appear, please refresh the page.",
+    "You've successfully watched the video and have been rewarded." => "You've successfully watched the video and have been rewarded.",
+    "Transaction failed!" => "Transaction failed!",
+    "Your plan purchase was successful." => "Your plan purchase was successful.",
+    "Deposit failed!" => "Deposit failed!",
+    'Your deposit of :amount FCFA was successful.' => 'Your deposit of :amount FCFA was successful.',
+    'An error occured. Please try again later.' => 'An error occured. Please try again later.',
+    'Your withdrawal of :amount FCFA was successful.' => 'Your withdrawal of :amount FCFA was successful.',
+    'Insufficient account balance.' => 'Insufficient account balance.',
+    'withdrawal-code-info' => 'A withdrawal code has been sent to your email address. Provide the code below to finalize your withdrawal.',
 ];

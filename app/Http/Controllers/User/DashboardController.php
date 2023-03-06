@@ -49,7 +49,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $video = Video::inRandomOrder()->limit(1)->first();
-        session()->flash('info', "You need to watch the video till the end inorder to be rewarded. If the video doesn't appear, please refresh the page.");
+        session()->flash('info', __('main.video-info'));
         return view('pages.user.video', compact('video', 'user'));
     }
 
@@ -80,6 +80,6 @@ class DashboardController extends Controller
         $user->watchedVideos()->create(['video_id' => $video->id]);
         $user->update(['balance' => $user->balance + $user->plan->video_cost]);
         return redirect()->route('thanks')
-            ->with('success', "You've successfully watched the video and have been rewarded.");
+            ->with('success', __("main.You've successfully watched the video and have been rewarded."));
     }
 }

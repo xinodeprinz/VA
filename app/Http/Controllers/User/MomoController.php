@@ -109,7 +109,7 @@ class MomoController extends Controller
         $success = $this->depositHelper($data);
 
         if (!$success) {
-            return back()->with('error', "Transaction failed!");
+            return back()->with('error', __('main.Transaction failed!'));
         }
 
         $user->plan_id = $plan->id;
@@ -127,7 +127,7 @@ class MomoController extends Controller
         $request->session()->forget('planId');
 
         return redirect()->route('home')
-            ->with('success', "Your plan purchase was successful.");
+            ->with('success', __('main.Your plan purchase was successful.'));
     }
 
     public function processDeposit(Request $request)
@@ -143,7 +143,7 @@ class MomoController extends Controller
         $success = $this->depositHelper($data);
 
         if (!$success) {
-            return back()->with('error', "Deposit failed!");
+            return back()->with('error', __('main.Deposit failed!'));
         }
 
         // End of processing
@@ -160,7 +160,9 @@ class MomoController extends Controller
         ]);
 
         return redirect()->route('home')
-            ->with('success', "Your deposit of {$request->amount} FCFA was successful.");
+            ->with('success', __("main.Your deposit of :amount FCFA was successful.", [
+                'amount' => $request->amount,
+            ]));
     }
 
     public function processWithdrawal(Request $request)
@@ -207,11 +209,11 @@ class MomoController extends Controller
         // Sending money to the user's mobile money.
         $success = $this->withdrawalHelper($data);
         if (!$success) {
-            return back()->with('error', "An error occured. Please try again later.");
+            return back()->with('error', __('main.An error occured. Please try again later.'));
         }
 
         return redirect()->route('home')
-            ->with('success', "Your withdrawal of {$amount} FCFA was successful.");
+            ->with('success', __("main.Your withdrawal of :amount FCFA was successful.", ['amount' => $amount]));
     }
 
     public function sendWithdrawalEmail(Request $request)
@@ -221,7 +223,7 @@ class MomoController extends Controller
         if ($user->balance < $request->amount) {
             return back()
                 ->onlyInput('amount')
-                ->with('error', 'Insufficient account balance.');
+                ->with('error', __('main.Insufficient account balance.'));
         }
         // Email withdrawal code.
         $code = Help::verificationCode(5);
@@ -231,6 +233,6 @@ class MomoController extends Controller
             'amount' => $request->amount,
         ]);
         return redirect()->route('process-withdrawal')
-            ->with('info', "A withdrawal code has been sent to your email address. Provide the code below to finalize your withdrawal.");
+            ->with('info', __('main.withdrawal-code-info'));
     }
 }

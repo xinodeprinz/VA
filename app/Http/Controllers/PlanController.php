@@ -36,7 +36,7 @@ class PlanController extends Controller
         try {
             $plan = Plan::findOrFail($request->plan_id);
         } catch (\Throwable$th) {
-            return back()->with('error', 'The selected plan does not exists.');
+            return back()->with('error', __('main.The selected plan does not exists.'));
         }
 
         $user = Auth::user();
@@ -48,7 +48,7 @@ class PlanController extends Controller
             $user->balance -= $plan->amount;
             $user->update();
 
-            return redirect()->route('home')->with('success', 'Plan bought successfully.');
+            return redirect()->route('home')->with('success', __('main.Plan bought successfully.'));
         }
 
         $request->session()->put('planId', $plan->id);
