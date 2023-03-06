@@ -168,4 +168,8 @@ return [
     'Your withdrawal of :amount FCFA was successful.' => 'Votre retrait de :amount FCFA a réussi.',
     'Insufficient account balance.' => 'Solde de compte insuffisant.',
     'withdrawal-code-info' => 'Un code de retrait a été envoyé à votre adresse e-mail. Fournissez le code ci-dessous pour finaliser votre retrait.',
+    'Your account has been suspended due to fraudulent purposes.' => 'Votre compte a été suspendu à des fins frauduleuses.',
+    'Your plan has expired.' => 'Votre plan a expiré.',
+    "You don't have a plan. Purhcase one to start earning." => "Vous n'avez pas de plan. Achetez-en un pour commencer à gagner.",
+    "You don't have an active plan. Subscribe to one to be eligible for withdrawal." => "Vous n'avez pas de plan actif. Abonnez-vous à l'un d'eux pour être éligible au retrait.",
 ];

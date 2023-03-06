@@ -24,7 +24,7 @@ class Withdraw
             $user = $request->user();
             if (!$user->plan) {
                 return redirect()->route('home')
-                    ->with('info', "You don't have an active plan. Subscribe to one to be eligible for withdrawal.");
+                    ->with('info', __("main.You don't have an active plan. Subscribe to one to be eligible for withdrawal."));
             }
         }
 

@@ -35,7 +35,7 @@ class Expired
             $user->plan_id = 0;
             $user->expires_on = null;
             $user->update();
-            return redirect()->route('home')->with('info', "Your plan has expired.");
+            return redirect()->route('home')->with('info', __('main.Your plan has expired.'));
         }
 
         return $next($request);

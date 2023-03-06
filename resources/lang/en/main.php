@@ -169,4 +169,8 @@ return [
     'Your withdrawal of :amount FCFA was successful.' => 'Your withdrawal of :amount FCFA was successful.',
     'Insufficient account balance.' => 'Insufficient account balance.',
     'withdrawal-code-info' => 'A withdrawal code has been sent to your email address. Provide the code below to finalize your withdrawal.',
+    'Your account has been suspended due to fraudulent purposes.' => 'Your account has been suspended due to fraudulent purposes.',
+    'Your plan has expired.' => 'Your plan has expired.',
+    "You don't have a plan. Purhcase one to start earning." => "You don't have a plan. Purhcase one to start earning.",
+    "You don't have an active plan. Subscribe to one to be eligible for withdrawal." => "You don't have an active plan. Subscribe to one to be eligible for withdrawal.",
 ];
