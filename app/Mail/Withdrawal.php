@@ -35,7 +35,7 @@ class Withdrawal extends Mailable
     public function build()
     {
         return $this->from(env('EMAIL'), config('app.name'))
-            ->subject(config('app.name') . ' Withdrawal')
+            ->subject(config('app.name') . " " . __('main.withdrawal'))
             ->view('emails.withdrawal')->with([
             'user' => $this->user,
             'code' => $this->code,

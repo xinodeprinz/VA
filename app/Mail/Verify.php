@@ -32,7 +32,7 @@ class Verify extends Mailable
     public function build()
     {
         return $this->from(env('EMAIL'), config('app.name'))
-            ->subject('Verify Email Address')
+            ->subject(__('main.Verify Email Address'))
             ->view('emails.verify')->with([
             'user' => $this->user,
             'code' => $this->code,

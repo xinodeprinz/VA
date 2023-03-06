@@ -148,4 +148,13 @@ return [
     'go to homepage' => 'go to homepage',
     "Opps!! The page you're looking for does not exists." => "Opps!! The page you're looking for does not exists.",
     'page not found' => 'page not found',
+    "Hello" => "Hello",
+    "To finalize your account creation, use the code below as your registration code." => "To finalize your account creation, use the code below as your registration code.",
+    'Code expires in :minutes minutes.' => 'Code expires in :minutes minutes.',
+    'Regards' => 'Regards',
+    'email-withdrawal' => "To finalize your withdrawal of :amount FCFA, to the phone number (+237) :phone, use the code below as your withdrawal code.",
+    'Verify Email Address' => 'Verify Email Address',
+    'A fresh verification link has been sent to your email address.' => 'A fresh verification link has been sent to your email address.',
+    'Code sent successfully. Check your email address.' => 'Code sent successfully. Check your email address.',
+
 ];

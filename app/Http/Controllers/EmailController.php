@@ -30,7 +30,7 @@ class EmailController extends Controller
     public function notification(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
-        return back()->with('success', 'A fresh verification link has been sent to your email address.');
+        return back()->with('success', __('main.A fresh verification link has been sent to your email address.'));
     }
 
     public function resendCode(Request $request)
@@ -39,7 +39,7 @@ class EmailController extends Controller
         $user = $request->user();
         Mail::to($user->email)->send(new Verify($user, $code));
         $request->session()->put('code', $code);
-        return back()->with('success', 'Code sent successfully. Check your email address.');
+        return back()->with('success', __('main.Code sent successfully. Check your email address.'));
     }
 
     public function verifyUser(Request $request)

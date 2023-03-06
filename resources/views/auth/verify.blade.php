@@ -31,7 +31,7 @@
                         <div class="text-center mt-2">
                             <form method="POST" action="{{ route('resend-code') }}">
                                 @csrf
-                                <span>{{ __("Didn't receive message?") }}</span>
+                                <span>{{ __("main.Didn't receive message?") }}</span>
                                 <button type="submit" class="btn btn-link m-0 p-0">{{ __('main.Send Again') }}</button>
                             </form>
                         </div>
