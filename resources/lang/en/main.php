@@ -173,4 +173,5 @@ return [
     'Your plan has expired.' => 'Your plan has expired.',
     "You don't have a plan. Purhcase one to start earning." => "You don't have a plan. Purhcase one to start earning.",
     "You don't have an active plan. Subscribe to one to be eligible for withdrawal." => "You don't have an active plan. Subscribe to one to be eligible for withdrawal.",
+    "finalize withdrawal" => "finalize withdrawal",
 ];

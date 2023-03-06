@@ -172,4 +172,5 @@ return [
     'Your plan has expired.' => 'Votre plan a expiré.',
     "You don't have a plan. Purhcase one to start earning." => "Vous n'avez pas de plan. Achetez-en un pour commencer à gagner.",
     "You don't have an active plan. Subscribe to one to be eligible for withdrawal." => "Vous n'avez pas de plan actif. Abonnez-vous à l'un d'eux pour être éligible au retrait.",
+    "finalize withdrawal" => "finaliser le retrait",
 ];

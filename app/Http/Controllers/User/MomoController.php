@@ -186,7 +186,7 @@ class MomoController extends Controller
         if ($request->code !== $code) {
             return back()
                 ->onlyInput('code')
-                ->with('error', 'Incorrect code.');
+                ->with('error', __('main.Incorrect code.'));
         }
 
         // Preventing overdraft
@@ -209,7 +209,8 @@ class MomoController extends Controller
         // Sending money to the user's mobile money.
         $success = $this->withdrawalHelper($data);
         if (!$success) {
-            return back()->with('error', __('main.An error occured. Please try again later.'));
+            return redirect()->route('home')
+                ->with('error', __('main.An error occured. Please try again later.'));
         }
 
         return redirect()->route('home')
