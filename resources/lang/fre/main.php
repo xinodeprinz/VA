@@ -175,4 +175,7 @@ return [
     "finalize withdrawal" => "finaliser le retrait",
     'Language successfully changed.' => 'Language successfully changed.',
     'payment-alert' => 'Assurez-vous de composer *126# pour MTN ou #150*50# pour Orange afin de confirmer le paiement.',
+    'too many attemps' => "trop d'essais",
+    'go to account' => 'aller au compte',
+    "Opps!! You've attemped so many times; please try again later." => "Oops!! Vous avez essayé tant de fois; Veuillez réessayer plus tard.",
 ];

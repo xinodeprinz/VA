@@ -10,9 +10,13 @@
             </div>
             <div class="row">
                 <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
-                    <div class="d-flex align-items-center mb-3 justify-content-center">
-                        <img src="/storage/images/mtn.png" class="p-method" alt="MTN" />
-                        <img src="/storage/images/orange.png" class="p-method ms-2" alt="Orange" />
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="/storage/images/mtn.png" class="p-method" alt="MTN" />
+                        </div>
+                        <div class="col-6">
+                            <img src="/storage/images/orange.png" class="p-method" alt="Orange" />
+                        </div>
                     </div>
                     <div class="form">
                         @if ($plan)
