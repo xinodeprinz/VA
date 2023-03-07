@@ -557,6 +557,11 @@ thead {
     .video {
         --bs-aspect-ratio: 100%;
     }
+
+    .hero {
+        background-image: url('/storage/images/back-img-sm.jpg');
+        background-position: center center;
+    }
 }
 
 @media(min-width: 992px) {

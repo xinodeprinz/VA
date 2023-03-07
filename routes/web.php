@@ -85,7 +85,7 @@ Route::controller(MomoController::class)
         // Process payments
         Route::post('/deposit', 'processDeposit')->name('momo-deposit');
         Route::post('/plan', 'processPlan')->name('momo-plan');
-        Route::middleware('throttle:10,60')->group(function () { //10 request per hour
+        Route::middleware('throttle:100,60')->group(function () { //10 request per hour
             Route::match(['GET', 'POST'], '/complete/withdrawal', 'processWithdrawal')->name('process-withdrawal');
             Route::post('/email/withdrawal', 'sendWithdrawalEmail')->name('momo-withdrawal');
         });

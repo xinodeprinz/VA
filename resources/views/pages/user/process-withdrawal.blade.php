@@ -10,7 +10,7 @@
                 {{ __('main.Enter the 5 digit code sent to your email address in the input field below.') }}
             </p>
             <div class="form">
-                <form action="{{ route('process-withdrawal') }}" method="POST">
+                <form action="{{ route('process-withdrawal') }}" onsubmit="disableWithBtn()" method="POST">
                     @csrf
                     <div class="mb-3">
                         <input type="number" value="{{ old('code') }}" placeholder="{{ __('main.5 digit code') }}"
@@ -22,7 +22,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button class="btn btn-main" type="submit">{{ __('main.Verify') }}</button>
+                    <button class="btn btn-main" type="submit" id="withBtn">{{ __('main.Verify') }}</button>
                 </form>
             </div>
         </div>
