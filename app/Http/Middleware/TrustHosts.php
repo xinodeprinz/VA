@@ -15,6 +15,8 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
+            'https://youtube.com',
+            'https://cdn.jsdelivr.net',
         ];
     }
 }
