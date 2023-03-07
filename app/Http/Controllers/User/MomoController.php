@@ -40,6 +40,12 @@ class MomoController extends Controller
             $plan = Plan::findOrFail($planId);
             $title = $plan->title;
         }
+        // Flashing message to the session if its a plan or deposit.
+        $alertTypes = ['deposit', 'plan'];
+        if (in_array($type, $alertTypes)) {
+            $request->session()->flash('info', __('main.payment-alert'));
+        }
+
         return view('pages.user.payment', compact(
             'type', 'plan', 'title', 'phone_number', 'user'
         ));

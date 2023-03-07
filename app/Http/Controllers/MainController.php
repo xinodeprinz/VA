@@ -53,14 +53,9 @@ class MainController extends Controller
         return back()->with('success', __('main.Your message has been successfully emailed to us.'));
     }
 
-    public function terms()
+    public function changeLanguage(Request $request, $locale)
     {
-        return view('pages.terms');
-    }
-
-    public function changeLanguage($locale)
-    {
-        session(['locale' => $locale]);
-        return back();
+        $request->session()->put('locale', $locale);
+        return back()->with('success', __('main.Language successfully changed.'));
     }
 }

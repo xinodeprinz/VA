@@ -173,4 +173,6 @@ return [
     "You don't have a plan. Purhcase one to start earning." => "Vous n'avez pas de plan. Achetez-en un pour commencer à gagner.",
     "You don't have an active plan. Subscribe to one to be eligible for withdrawal." => "Vous n'avez pas de plan actif. Abonnez-vous à l'un d'eux pour être éligible au retrait.",
     "finalize withdrawal" => "finaliser le retrait",
+    'Language successfully changed.' => 'Language successfully changed.',
+    'payment-alert' => 'Assurez-vous de composer *126# pour MTN ou #150*50# pour Orange afin de confirmer le paiement.',
 ];

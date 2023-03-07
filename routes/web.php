@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/register/{referral?}', [RegisterController::class, 'showRegistrationForm'])->name('register');
-
 Auth::routes();
 
 // Email verification routes
@@ -53,9 +52,6 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
     Route::get('/plans', 'plans')->name('plans');
     Route::match(['GET', 'POST'], '/contact', 'contact')->name('contact');
-    Route::get('/terms-and-conditions', 'terms')->name('terms');
-    Route::post('/currency', 'currency')->name('currency');
-    Route::post('/payment-method', 'paymentMethod')->name('payment-method');
     Route::get('/language/{locale}', 'changeLanguage')->name('language.change');
 });
 
@@ -89,7 +85,7 @@ Route::controller(MomoController::class)
         // Process payments
         Route::post('/deposit', 'processDeposit')->name('momo-deposit');
         Route::post('/plan', 'processPlan')->name('momo-plan');
-        Route::middleware('throttle:20,60')->group(function () { //10 request per hour
+        Route::middleware('throttle:10,60')->group(function () { //10 request per hour
             Route::match(['GET', 'POST'], '/complete/withdrawal', 'processWithdrawal')->name('process-withdrawal');
             Route::post('/email/withdrawal', 'sendWithdrawalEmail')->name('momo-withdrawal');
         });
