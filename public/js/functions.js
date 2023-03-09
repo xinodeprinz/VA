@@ -41,6 +41,7 @@ window.onload = () => {
             denyButtonText: `Anglais<br/>English`,
             confirmButtonColor: data.colors.main,
             denyButtonColor: 'black',
+            allowOutsideClick: false,
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
