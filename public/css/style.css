@@ -319,16 +319,12 @@ input[type=password] {
     position: relative;
 }
 
-.toggle-pass {
-    position: absolute;
-    right: 0.8rem;
-    top: 12px;
-    color: var(--bs-main);
-    cursor: pointer;
-}
-
 .form-check-input {
     border: 1px solid var(--bs-main);
+}
+
+.toggle-password {
+    cursor: pointer;
 }
 
 .form-check-input,

@@ -66,8 +66,11 @@
                                 <input type="password" placeholder="{{ __('main.Password') }}" name="password"
                                     class="form-control @error('password')
                                 is-invalid
-                            @enderror" />
-                                <div class="toggle-pass"><i class="fas fa-eye"></i></div>
+                            @enderror"
+                                    id="password" />
+                                <div class="input-group-text toggle-password" onclick="togglePasword(this)">
+                                    <i class="fas fa-eye"></i>
+                                </div>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

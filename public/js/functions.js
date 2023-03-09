@@ -53,3 +53,15 @@ window.onload = () => {
         });
     }
 }
+
+function togglePasword(toggler) {
+    const passInput = document.getElementById('password');
+    const icon = toggler.children[0];
+    if (passInput.type === 'password') {
+        passInput.type = 'text';
+        icon.setAttribute('data-icon', 'eye-slash');
+    } else {
+        passInput.type = 'password';
+        icon.setAttribute('data-icon', 'eye');
+    }
+}

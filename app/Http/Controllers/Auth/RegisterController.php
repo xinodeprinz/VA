@@ -73,4 +73,13 @@ class RegisterController extends Controller
             'phone_number' => $data['phone_number'],
         ]);
     }
+
+    protected function phoneNumberIsValid(string $phoneNumber): bool
+    {
+        $validOnes = [5, 7, 8, 9];
+        if ($phoneNumber[0] != 6 || !in_array($phoneNumber[1], $validOnes)) {
+            return false;
+        }
+        return true;
+    }
 }
