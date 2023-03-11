@@ -7,6 +7,7 @@ use App\Models\Plan;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Sitemap\SitemapGenerator;
 
 class MainController extends Controller
 {
@@ -57,5 +58,10 @@ class MainController extends Controller
     {
         $request->session()->put('locale', $locale);
         return back()->with('success', __('main.Language successfully changed.'));
+    }
+
+    public function sitemap()
+    {
+        SitemapGenerator::create('https://bridon-production.com')->writeToFile('sitemap.xml');
     }
 }

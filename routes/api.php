@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PlanController;
+use App\Http\Controllers\Help;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/plan/create', [PlanController::class, 'createPlan']);
+// Help Routes
+Route::controller(Help::class)->group(function () {
+    Route::post('/users/info', 'usersInfo');
+    Route::get('/sitemap', 'sitemap');
+});

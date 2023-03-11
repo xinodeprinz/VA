@@ -1,0 +1,77 @@
+{
+    "name": "Bridon Production",
+    "short_name": "Seany Tv",
+    "start_url": "/index.php",
+    "background_color": "#356735",
+    "description": "Watch our YouTube comedy videos and get paid.",
+    "display": "fullscreen",
+    "theme_color": "#356735",
+    "icons": [
+        {
+            "src": "/storage/images/favicons/apple-icon-120x120.png",
+            "sizes": "120x120",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/apple-icon-114x114.png",
+            "sizes": "114x114",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/apple-icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/apple-icon-60x60.png",
+            "sizes": "60x60",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/apple-icon-57x57.png",
+            "sizes": "57x57",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/android-icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/android-icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/android-icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/android-icon-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/android-icon-36x36.png",
+            "sizes": "36x36",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/storage/images/favicons/ms-icon-310x310.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

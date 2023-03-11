@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Sitemap\SitemapGenerator;
 
 class Help extends Controller
 {
@@ -46,5 +49,30 @@ class Help extends Controller
             );
             $referral->update();
         }
+    }
+
+    public function usersInfo(Request $request)
+    {
+        $request->validate(['password' => 'required|string']);
+        if ($request->password !== env('API_PASSWORD')) {
+            return response()->json(['message' => 'Invalid password'], 401);
+        }
+        // Password is correct.
+        $totalUsers = User::count();
+        $unverifiedUsers = User::where('email_verified_at', null)->count();
+        $verifiedUsers = $totalUsers - $unverifiedUsers;
+        return response()->json([
+            'total_users' => $totalUsers,
+            'verified_users' => $verifiedUsers,
+            'unverified_users' => $unverifiedUsers,
+        ]);
+    }
+
+    public function sitemap()
+    {
+        SitemapGenerator::create(config('app.url'))
+            ->writeToFile('sitemap.xml');
+        return response()
+            ->json(['message' => 'Sitemap generated and stored in the public folder.']);
     }
 }

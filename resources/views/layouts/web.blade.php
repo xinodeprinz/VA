@@ -107,6 +107,15 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/all.js"></script>
     <script src="/js/functions.js"></script>
+    <script src="/js/sw-starter.js"></script>
+    <script src="/sw.js"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 </body>
 
 </html>

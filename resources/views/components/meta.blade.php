@@ -48,3 +48,8 @@ $route = ucfirst($route);
 <link rel="stylesheet" href="/css/bootstrap.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- PWA  -->
+<meta name="theme-color" content="#356735" />
+<link rel="apple-touch-icon" href="/storage/images/favicons/ms-icon-310x310.png">
+<link rel="manifest" href="/manifest.json">

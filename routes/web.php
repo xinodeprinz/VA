@@ -53,6 +53,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/plans', 'plans')->name('plans');
     Route::match(['GET', 'POST'], '/contact', 'contact')->name('contact');
     Route::get('/language/{locale}', 'changeLanguage')->name('language.change');
+    Route::get('/sitemap', 'sitemap')->name('sitemap');
 });
 
 Route::controller(DashboardController::class)
