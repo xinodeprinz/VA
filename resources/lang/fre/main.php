@@ -149,7 +149,7 @@ return [
     'page not found' => 'Page non trouvée',
     "Hello" => "Bonjour",
     "To finalize your account creation, use the code below as your registration code." => "Pour finaliser la création de votre compte, utilisez le code ci-dessous comme code d'inscription.",
-    'Code expires in :minutes minutes.' => 'Le code expire dans "minutes minutes.',
+    'Code expires in :minutes minutes.' => 'Le code expire dans :minutes minutes.',
     'Regards' => 'Salutations',
     'email-withdrawal' => "Pour finaliser votre retrait de :amount FCFA, au numéro de téléphone (+237) :phone, utilisez le code ci-dessous comme code de retrait.",
     'Verify Email Address' => "Vérifier l'adresse e-mail",

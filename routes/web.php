@@ -105,6 +105,5 @@ Route::controller(AdminController::class)
         Route::get('/users', 'users')->name('admin.users');
         Route::delete('/users/{id}', 'deleteUser')->name('user.delete');
         Route::patch('/users/{id}', 'blockUser')->name('user.block');
-        Route::get('/ads', 'ads')->name('admin.ads');
-        Route::delete('/ads/{id}', 'deleteAd')->name('ad.delete');
+        Route::match(['GET', 'POST'], '/users/email', 'emailUsers')->name('admin.users.email');
     });

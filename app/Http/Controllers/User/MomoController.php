@@ -219,6 +219,11 @@ class MomoController extends Controller
                 ->with('error', __('main.An error occured. Please try again later.'));
         }
 
+        $user->transactions()->create([
+            'amount' => $amount,
+            'type' => 'withdrawal',
+        ]);
+
         return redirect()->route('home')
             ->with('success', __("main.Your withdrawal of :amount FCFA was successful.", ['amount' => $amount]));
     }

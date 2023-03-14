@@ -2,31 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ad;
+use App\Mail\Users;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
     public function users()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         $user = Auth::user();
-
-        if (session('currency') === 'USD') {
-            for ($i = 0; $i < $users->count(); $i++) {
-                $users[$i]->account_balance /= env('EXCHANGE_RATE');
-            }
-        }
-
-        return view('pages.admin.users', compact('users', 'user'));
+        $total = User::count();
+        return view('pages.admin.users', compact('users', 'user', 'total'));
     }
 
     public function blockUser($id)
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
@@ -41,7 +37,7 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
@@ -50,23 +46,35 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'User deleted!');
     }
 
-    public function ads()
+    public function emailUsers(Request $request)
     {
-        $ads = Ad::all();
-        $user = Auth::user();
-        return view('pages.admin.ads', compact('ads', 'user'));
-    }
-
-    public function deleteAd($id)
-    {
-        try {
-            $ad = Ad::findOrFail($id);
-        } catch (\Throwable $th) {
-            return redirect()->route('admin.ads')->with('error', 'Ad not found.');
+        $user = $request->user();
+        if ($request->isMethod('GET')) {
+            return view('pages.admin.email', compact('user'));
         }
 
-        $ad->delete();
+        $request->validate([
+            'subject' => 'required|string|min:3',
+            'message' => 'required|string',
+        ]);
 
-        return redirect()->route('admin.ads')->with('success', 'Ad deleted!');
+        $users = User::all();
+        $success = 0;
+        $failed = 0;
+
+        foreach ($users as $u) {
+            try {
+                Mail::to($u->email)->send(new Users($u, $request->all()));
+                $success += 1;
+            } catch (\Throwable$th) {
+                $failed += 1;
+                continue;
+            }
+        }
+
+        return response()->json([
+            'success' => $success,
+            'failed' => $failed,
+        ]);
     }
 }

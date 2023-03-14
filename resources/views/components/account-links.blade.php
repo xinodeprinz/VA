@@ -23,3 +23,15 @@
     <a class="nav-link text-capitalize {{ request()->routeIs('referrals') ? 'active' : '' }}"
         href="{{ route('referrals') }}">{{ __('main.referrals') }}</a>
 </li>
+@can('admin')
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin*') ? 'active' : '' }}" data-bs-toggle="dropdown"
+            href="#">
+            Admin
+        </a>
+        <div class="dropdown-menu text-capitalize">
+            <a href="{{ route('admin.users') }}" class="dropdown-item">Users</a>
+            <a href="{{ route('admin.users.email') }}" class="dropdown-item">Email Users</a>
+        </div>
+    </li>
+@endcan
