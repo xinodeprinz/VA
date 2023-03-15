@@ -1,12 +1,10 @@
 https://developers.google.com/youtube/iframe_api_reference
 
-#### Edited files
-- Made mail `Users` //
-- Created view emails.users //
-- Editing AdminController //
-- Adjusted web.php //
-- Deleted view pages.admin.ads //
-- Created view pages.admin.email //
-- Edited components.account-links //
-- Edited pages.admin.users
-- Edited functions.js
+- Edited AdminController //
+- Edited functions.js //
+- Account layout //
+- Security Headers middleware //
+- Edited pages.admin.emails //
+- Edited style.css //
+- Created lang.fre.auth.php
+- Help Controller

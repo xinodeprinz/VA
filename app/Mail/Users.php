@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -20,7 +19,7 @@ class Users extends Mailable
     protected $data;
     protected $user;
 
-    public function __construct(User $user, array $data)
+    public function __construct(object $user, array $data)
     {
         $this->user = $user;
         $this->data = $data;
@@ -35,6 +34,7 @@ class Users extends Mailable
     {
         return $this->from(env('EMAIL'), config('app.name'))
             ->subject($this->data['subject'])
+            ->replyTo(env('EMAIL'), config('app.name'))
             ->view('emails.users')->with([
             'user' => $this->user,
             'data' => $this->data,

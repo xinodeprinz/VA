@@ -75,4 +75,9 @@ class Help extends Controller
         return response()
             ->json(['message' => 'Sitemap generated and stored in the public folder.']);
     }
+
+    public static function error(object $val)
+    {
+        return array_values($val->getMessageBag()->toArray())[0][0];
+    }
 }

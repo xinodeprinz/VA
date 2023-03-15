@@ -67,26 +67,40 @@ function togglePasword(toggler) {
 }
 
 async function emailUsers(btn) {
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    const type = document.getElementById('type').value;
+    const data = { subject, message, type };
+    loadSpinner(btn);
     try {
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        const token = document.querySelector('meta[name="csrf-token"]').content;
-        loadSpinner(btn);
-        // Sending ajax request
-        const res = await fetch('/admin/users/email', {
-            method: 'POST',
-            body: JSON.stringify({ subject, message }),
-            headers: {
-                "X-CSRF-Token": token,
-                'Content-Type': 'Application/json',
-                'Accept': 'Application/json',
-            },
-        });
-        const { success, failed } = await res.json();
-        alert(`Emailing done!! Sucess: ${success}, Failed: ${failed}`);
-        return window.location.reload();
-    } catch (error) {
-        alert('An error occured');
-        console.log(error);
+        const res = await axios.post('/admin/users/email', data);
+        const { success, failed } = res.data;
+        const title = `Success: ${success}, Failed: ${failed}`;
+        sweetAlert({ icon: 'success', title });
+        return setTimeout(() => {
+            window.location.reload();
+        }, 6000);
+
+    } catch (err) {
+        btn.innerText = 'Email Now';
+        btn.removeAttribute('disabled');
+        const title = err.response.data.message;
+        sweetAlert({ icon: 'error', title })
     }
+}
+
+function sweetAlert({ icon, title }) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    return Toast.fire({ icon, title })
 }

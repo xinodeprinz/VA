@@ -78,6 +78,9 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/all.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"
+        integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/functions.js"></script>
     <script src="/js/time.js"></script>
     <script src="/js/video.js"></script>

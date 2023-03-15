@@ -289,7 +289,8 @@ input[type=text],
 input[type=number],
 input[type=file],
 input[type=email],
-input[type=password] {
+input[type=password],
+.form-select {
     height: 3rem;
 }
 
@@ -538,6 +539,18 @@ thead {
 .languages {
     color: var(--bs-sec);
     text-transform: capitalize;
+}
+
+.form-select {
+    text-transform: capitalize;
+    outline: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.form-select:focus {
+    box-shadow: none;
+    border: 1px solid var(--bs-main);
 }
 
 @media(max-width: 991px) {
