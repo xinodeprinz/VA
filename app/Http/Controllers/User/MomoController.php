@@ -4,13 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Help;
-use App\Mail\Withdrawal;
 use App\Models\Plan;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 use MeSomb\Operation\PaymentOperation;
 use MeSomb\Signature;
 
@@ -18,6 +17,9 @@ class MomoController extends Controller
 {
 
     protected $client;
+    protected $data;
+    protected $user;
+    protected $amount;
 
     public function __construct()
     {
@@ -138,7 +140,8 @@ class MomoController extends Controller
 
     public function processDeposit(Request $request)
     {
-        $request->validate(['amount' => 'required|integer|min:100']);
+        $min = Plan::first()->amount;
+        $request->validate(['amount' => "required|integer|min:$min"]);
         $user = Auth::user();
 
         $data = [
@@ -171,63 +174,6 @@ class MomoController extends Controller
             ]));
     }
 
-    public function processWithdrawal(Request $request)
-    {
-        // Protecting route
-        if (!$request->session()->has('withdrawal_code')) {
-            return redirect()->route('home');
-        }
-
-        $user = $request->user();
-        // Show page
-        if ($request->isMethod('GET')) {
-            return view('pages.user.process-withdrawal', compact('user'));
-        }
-
-        // Finalize withdrawal.
-        $request->validate(['code' => 'required|string|size:5']);
-        $code = $request->session()->get('withdrawal_code');
-        $amount = $request->session()->get('amount');
-
-        if ($request->code !== $code) {
-            return back()
-                ->onlyInput('code')
-                ->with('error', __('main.Incorrect code.'));
-        }
-
-        // Preventing overdraft
-        if ($user->balance < $amount) {
-            return redirect()->route('home');
-        }
-
-        $charges = (env('WITHDRAWAL_CHARGES_PERCENTAGE') * $amount) / 100;
-
-        // Code is correct
-        $data = [
-            'phone_number' => $user->phone_number,
-            'amount' => $amount - $charges,
-        ];
-
-        // Updating user's record and forgetting sessions.
-        $request->session()->forget(['withdrawal_code', 'amount']);
-        $user->update(['balance' => $user->balance - $amount]);
-
-        // Sending money to the user's mobile money.
-        $success = $this->withdrawalHelper($data);
-        if (!$success) {
-            return redirect()->route('home')
-                ->with('error', __('main.An error occured. Please try again later.'));
-        }
-
-        $user->transactions()->create([
-            'amount' => $amount,
-            'type' => 'withdrawal',
-        ]);
-
-        return redirect()->route('home')
-            ->with('success', __("main.Your withdrawal of :amount FCFA was successful.", ['amount' => $amount]));
-    }
-
     public function sendWithdrawalEmail(Request $request)
     {
         $user = $request->user();
@@ -237,14 +183,37 @@ class MomoController extends Controller
                 ->onlyInput('amount')
                 ->with('error', __('main.Insufficient account balance.'));
         }
-        // Email withdrawal code.
-        $code = Help::verificationCode(5);
-        Mail::to($user->email)->send(new Withdrawal($user, $code, $request->amount));
-        $request->session()->put([
-            'withdrawal_code' => $code,
-            'amount' => $request->amount,
-        ]);
-        return redirect()->route('process-withdrawal')
-            ->with('info', __('main.withdrawal-code-info'));
+
+        // Sending money
+        $charges = (env('WITHDRAWAL_CHARGES_PERCENTAGE') * $request->amount) / 100;
+
+        $this->data = [
+            'phone_number' => $user->phone_number,
+            'amount' => $request->amount - $charges,
+        ];
+
+        $this->user = $user;
+        $this->amount = $request->amount;
+
+        $executed = RateLimiter::attempt('withdrawal:' . $user->id, 1, function () {
+            $this->user->update(['balance' => $this->user->balance - $this->amount]);
+            $success = $this->withdrawalHelper($this->data);
+            if (!$success) {
+                return false;
+            }
+            $this->user->transactions()->create([
+                'amount' => $this->amount,
+                'type' => 'withdrawal',
+            ]);
+        }, 600); //Run 1 time in 10 minutes.
+
+        // Max attempts passed or an error occured
+        if (!$executed) {
+            return redirect()->route('home')
+                ->with('info', __('main.An error occured. Please try again later.'));
+        }
+
+        return redirect()->route('home')
+            ->with('success', __("main.Your withdrawal of :amount FCFA was successful.", ['amount' => $this->amount]));
     }
 }

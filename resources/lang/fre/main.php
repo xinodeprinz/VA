@@ -179,4 +179,6 @@ return [
     'go to account' => 'aller au compte',
     "Opps!! You've attemped so many times; please try again later." => "Oops!! Vous avez essayé tant de fois; Veuillez réessayer plus tard.",
     'Invalid MTN or Orange number.' => 'Numéro MTN ou Orange invalide.',
+    'Join WhatsApp group' => 'Rejoignez le groupe WhatsApp',
+    'WhatsApp Group' => 'Groupe WhatsApp',
 ];

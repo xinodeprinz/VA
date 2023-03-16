@@ -22,8 +22,8 @@
                     <div class="shadow contact-box p-3 d-flex align-items-center">
                         <div class="icon"><i class="fab fa-telegram"></i></div>
                         <div class="ms-2">
-                            <h4>{{ __('main.telegram channel') }}</h4>
-                            <a href="{{ env('TELEGRAM') }}" target="_blank">{{ __('main.Join Now') }}</a>
+                            <h4>{{ __('main.WhatsApp Group') }}</h4>
+                            <a href="{{ env('WHATSAPP') }}" target="_blank">{{ __('main.Join Now') }}</a>
                         </div>
                     </div>
                 </div>

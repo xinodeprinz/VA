@@ -12,4 +12,5 @@ return [
     ],
     'Incorrect code.' => 'Code incorrect.',
     'confirmed' => 'La confirmation :attribute ne correspond pas.',
+    'unique' => "Le :attribute a déjà été pris.",
 ];

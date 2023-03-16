@@ -180,4 +180,6 @@ return [
     'go to account' => 'go to account',
     "Opps!! You've attemped so many times; please try again later." => "Opps!! You've attemped so many times; please try again later.",
     'Invalid MTN or Orange number.' => 'Invalid MTN or Orange number.',
+    'Join WhatsApp group' => 'Join WhatsApp group',
+    'WhatsApp Group' => 'WhatsApp Group',
 ];

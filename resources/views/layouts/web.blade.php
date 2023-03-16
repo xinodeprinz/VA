@@ -73,8 +73,8 @@
                                     class="fas fa-envelope"></i>
                                 {{ env('EMAIL') }}</a>
                         </div>
-                        <a href="{{ env('TELEGRAM') }}" target="_blank"><i class="fab fa-telegram"></i>
-                            {{ __('main.Join Telegram group') }}</a>
+                        <a href="{{ env('WHATSAPP') }}" target="_blank"><i class="fab fa-whatsapp"></i>
+                            {{ __('main.Join WhatsApp group') }}</a>
                     </div>
                     <div class="col-sm-6 col-lg-6">
                         <div class="section-title">
