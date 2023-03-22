@@ -196,11 +196,11 @@ class MomoController extends Controller
         $this->amount = $request->amount;
 
         $executed = RateLimiter::attempt('withdrawal:' . $user->id, 1, function () {
-            $this->user->update(['balance' => $this->user->balance - $this->amount]);
             $success = $this->withdrawalHelper($this->data);
             if (!$success) {
                 return false;
             }
+            $this->user->update(['balance' => $this->user->balance - $this->amount]);
             $this->user->transactions()->create([
                 'amount' => $this->amount,
                 'type' => 'withdrawal',

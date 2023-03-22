@@ -9,7 +9,7 @@
     </p>
 
     <p class="mb-0 mt-2 bg-main text-sec p-2 d-flex justify-content-between">
-        <span id="copy">{{ config('app.url') }}/register/{{ $user->username }}</span>
+        <span id="copy">{{ config('app.url') }}/register/{{ str_replace(' ', '-', $user->username) }}</span>
         <span style="cursor: pointer" onclick="copy()">
             <i class="far fa-copy"></i>
         </span>
