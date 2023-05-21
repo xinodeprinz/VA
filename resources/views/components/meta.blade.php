@@ -34,7 +34,7 @@ $route = ucfirst($route);
 <meta property="og:url" content="{{ config('app.url') }}" />
 <meta property="og:type" content="website" />
 <meta property="og:description" content="{{ $desc }}" />
-<meta property="og:image" content="{{ config('app.url') }}/storage/images/logo.jpg" />
+<meta property="og:image" content="{{ config('app.url') }}/images/logo.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
@@ -43,13 +43,13 @@ $route = ucfirst($route);
 <meta property="twitter:title" content="{{ config('app.name') }}" />
 <meta property="twitter:description" content="{{ $desc }}" />
 <meta property="twitter:url" content="{{ config('app.url') }}" />
-<meta property="twitter:image" content="{{ config('app.url') }}/storage/images/logo.jpg" />
+<meta property="twitter:image" content="{{ config('app.url') }}/images/logo.png" />
 
 <link rel="stylesheet" href="/css/bootstrap.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- PWA  -->
-<meta name="theme-color" content="#356735" />
-<link rel="apple-touch-icon" href="/storage/images/favicons/ms-icon-310x310.png">
+<meta name="theme-color" content="#eaebea" />
+<link rel="apple-touch-icon" href="/images/favicons/ms-icon-310x310.png">
 <link rel="manifest" href="/manifest.json">

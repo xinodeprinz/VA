@@ -1,3 +1,5 @@
+let deferredPrompt;
+
 const preLoad = function () {
     return caches.open("offline").then(function (cache) {
         // caching index and important routes
@@ -53,4 +55,42 @@ self.addEventListener("fetch", function (event) {
     if (!event.request.url.startsWith('http')) {
         event.waitUntil(addToCache(event.request));
     }
+});
+
+// Triggers the installation prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: true,
+        confirmButtonText: 'Install App',
+        confirmButtonColor: '#233344',
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        // icon: 'info',
+        title: 'Install App on this device'
+    }).then(result => {
+        if (result.isConfirmed) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(choiceResult => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+});
+
+window.addEventListener('appinstalled', (e) => {
+    app.logEvent('a2hs', 'installed');
 });

@@ -56,4 +56,10 @@ class MainController extends Controller
     {
         SitemapGenerator::create('https://bridon-production.com')->writeToFile('sitemap.xml');
     }
+
+    public function newsletter(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        return back()->with('success', __('main.You have subscribed successfully'));
+    }
 }

@@ -8,8 +8,10 @@
             <div class="row">
                 <div class="col-lg-6">
                     <p>
-                        {{ config('app.name') }}{{ __('main.aboutOne') }} <span class="text-main">Sean
-                            Tv</span>{{ __('main.aboutTwo') }}
+                        {{ __('main.aboutOne') }}
+                    </p>
+                    <p>
+                        {{ __('main.aboutTwo') }}
                     </p>
                     <p>
                         {{ __('main.aboutThree') }}

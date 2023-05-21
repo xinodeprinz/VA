@@ -53,6 +53,23 @@ body {
     background-color: var(--bs-sec);
 }
 
+.newsletter .container {
+    background-color: var(--bs-main);
+}
+
+.newsletter .btn {
+    background-color: var(--bs-sec);
+    margin-left: 0.5rem !important;
+}
+
+.newsletter .section-title {
+    text-align: center;
+}
+
+.newsletter .btn:hover {
+    background-color: white !important;
+}
+
 .btn-main {
     color: var(--bs-sec);
     background-color: var(--bs-main);
@@ -601,7 +618,8 @@ thead {
     opacity: 0.7;
 }
 
-.invest .section-title h1 {
+.invest .section-title h1,
+.newsletter .section-title h1 {
     color: var(--bs-sec);
     border-bottom: 2px solid var(--bs-sec);
     font-size: 40px !important;
@@ -648,13 +666,34 @@ thead {
         height: 400px !important;
         margin-bottom: 5rem !important;
     }
+
+    .hero p {
+        font-size: 19px !important;
+    }
+
+    .hero h1 {
+        font-size: 40px !important;
+    }
+
+    .invest .section-title h1 {
+        font-size: 30px !important;
+    }
+
+    .newsletter .section-title h1 {
+        font-size: 20px !important;
+    }
+
+    .jumbo {
+        height: 300px !important;
+    }
+
+    .jumbo h1 {
+        font-size: 35px !important;
+        margin-top: 2.5rem !important;
+    }
 }
 
 @media(min-width: 992px) {
-    .hero p {
-        font-size: 19px;
-    }
-
     .sidebar .nav-item {
         font-size: 18px;
     }

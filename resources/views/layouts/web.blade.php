@@ -73,12 +73,12 @@
                                     class="fas fa-envelope"></i>
                                 {{ env('EMAIL') }}</a>
                         </div>
-                        <a href="{{ env('WHATSAPP') }}" target="_blank"><i class="fab fa-whatsapp"></i>
-                            {{ __('main.Join WhatsApp group') }}</a>
+                        <a href="{{ env('WHATSAPP') }}" target="_blank"><i class="fas fa-road"></i>
+                            {{ env('LOCATION') }}</a>
                     </div>
                     <div class="col-sm-6 col-lg-6">
                         <div class="section-title">
-                            <h1>{{ __('main.our aim') }}</h1>
+                            <h1>{{ __('main.about us') }}</h1>
                         </div>
                         <p>
                             {{ __('main.footer-desc') }}
@@ -92,7 +92,7 @@
                             <li><a href="{{ route('register') }}">{{ __('main.register') }}</a></li>
                             <li><a href="{{ route('home') }}">{{ __('main.dashboard') }}</a></li>
                             <li><a href="{{ route('invest') }}">{{ __('main.Start earning') }}</a></li>
-                            <li><a href="{{ route('momo-deposit') }}">{{ __('main.deposit') }}</a></li>
+                            {{-- <li><a href="{{ route('momo-deposit') }}">{{ __('main.deposit') }}</a></li> --}}
                         </ul>
                     </div>
                 </div>
