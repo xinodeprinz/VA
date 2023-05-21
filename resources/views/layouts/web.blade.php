@@ -107,7 +107,6 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/all.js"></script>
     <script src="/js/functions.js"></script>
-    <script src="/js/sw-starter.js"></script>
     <script src="/sw.js"></script>
     <script>
         if (!navigator.serviceWorker.controller) {

@@ -1,7 +1,7 @@
 {
     "name": "Video Africa",
     "short_name": "Video Africa",
-    "start_url": "/index.php",
+    "start_url": "/",
     "background_color": "#233344",
     "description": "Africa's video paying platform",
     "display": "fullscreen",

@@ -59,16 +59,22 @@ class InvestmentController extends Controller
             $duration = 10;
         elseif ($amount < 2000)
             $duration = 15;
-        elseif ($duration < 5000)
+        elseif ($amount < 5000)
             $duration = 20;
         else
             $duration = 30;
 
-        // Calculating minimum withdrawal
+        // Calculating minimum withdrawal (3 days before withdrawal)
         if ($total < 1000)
-            $min_withdrawal = 0.5 * $total;
+            $min_withdrawal = $total / 2;
+        elseif ($total < 2000)
+            $min_withdrawal = $total / 3;
+        elseif ($total < 4000)
+            $min_withdrawal = $total / 5;
+        elseif ($total < 10000)
+            $min_withdrawal = $total / 6;
         else
-            $min_withdrawal = 0.1 * $total;
+            $min_withdrawal = $total / 10;
 
         $video_cost = round($total / $duration);
 
@@ -77,7 +83,7 @@ class InvestmentController extends Controller
             'video_cost' => $video_cost,
             'duration' => $duration,
             'total_earn' => $total,
-            'min_withdrawal' => round($min_withdrawal),
+            'min_withdrawal' => floor($min_withdrawal),
         ];
     }
 }

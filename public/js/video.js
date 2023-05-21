@@ -9,7 +9,7 @@ async function onYouTubeIframeAPIReady() {
     const video = await res.json();
 
     player = new YT.Player('player', {
-        height: 400,
+        height: 500,
         width: '100%',
         videoId: video.url,
         playerVars: {
@@ -19,11 +19,11 @@ async function onYouTubeIframeAPIReady() {
             disablekb: 1,
         },
         events: {
-            onStateChange: onPlayerStateChange,
+            onStateChange,
         },
     });
 
-    function onPlayerStateChange(e) {
+    function onStateChange(e) {
 
         const idInput = createInput(video.id);
         if (!form.querySelector('#v-id')) {
@@ -32,7 +32,6 @@ async function onYouTubeIframeAPIReady() {
         if (e.data == 0) {
             // Video has finished playing
             form.submit();
-
         }
     }
 

@@ -58,7 +58,7 @@ self.addEventListener("fetch", function (event) {
 });
 
 // Triggers the installation prompt
-window.addEventListener('beforeinstallprompt', (e) => {
+self.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     const Toast = Swal.mixin({
@@ -91,6 +91,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
 });
 
-window.addEventListener('appinstalled', (e) => {
+self.addEventListener('appinstalled', (e) => {
     app.logEvent('a2hs', 'installed');
 });

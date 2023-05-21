@@ -160,7 +160,7 @@ function getAndSetDetails(details) {
     // Setting values
     amountField.innerText = details ? details.amount + ' FCFA' : '-';
     videoField.innerText = details ? details.video_cost + ' FCFA' : '-';
-    durationField.innerText - details ? details.duration + ' days' : '-';
+    durationField.innerText = details ? details.duration + ' days' : '-';
     totalField.innerText = details ? details.total_earn + ' FCFA' : '-';
     minWithField.innerText = details ? details.min_withdrawal + ' FCFA' : '-';
 }

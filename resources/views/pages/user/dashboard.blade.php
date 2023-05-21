@@ -95,7 +95,13 @@
     <div class="row">
         <!--Investment days left-->
         @if ($user->investment)
-            <div class="{{ $showTimer ? 'col-md-6 mb-3' : 'col-md-8 col-lg-6 offset-md-2 offset-lg-3 mb-3' }}">
+            <div class="{{ $showTimer ? 'col-lg-4 mb-3' : 'col-lg-6 mb-3' }}">
+                <div class="bg-dark box shadow text-center p-3">
+                    <h4>{{ __('main.video cost') }}</h4>
+                    <div class="fs-5">{{ number_format($user->investment->video_cost, 0) }} FCFA</div>
+                </div>
+            </div>
+            <div class="{{ $showTimer ? 'col-lg-4 mb-3' : 'col-lg-6 mb-3' }}">
                 <div class="bg-main box shadow text-center p-3">
                     <h4>{{ __('main.investment days left') }}</h4>
                     <div class="fs-5">{{ $user->investmentDaysLeft }}</div>
@@ -104,7 +110,7 @@
         @endif
         <!-- Timer -->
         @if ($showTimer)
-            <div class="col-md-6 mb-3">
+            <div class="col-lg-4 mb-3">
                 <div class="bg-danger box shadow p-3 d-flex align-items-center justify-content-center">
                     <div class="icon clock-icon text-danger">
                         <i class="fas fa-clock"></i>
