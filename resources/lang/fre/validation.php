@@ -10,6 +10,9 @@ return [
         'numeric' => 'Le :attribute doit être au moins :min.',
         'string' => 'Le :attribute doit contenir au moins :min caractères.',
     ],
+    'max' => [
+        'numeric' => 'Le :attribute ne doit pas être supérieur à :max.',
+    ],
     'Incorrect code.' => 'Code incorrect.',
     'confirmed' => 'La confirmation :attribute ne correspond pas.',
     'unique' => "Le :attribute a déjà été pris.",

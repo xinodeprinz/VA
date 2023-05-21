@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 use Spatie\Sitemap\SitemapGenerator;
 
 class Help extends Controller
@@ -36,7 +37,7 @@ class Help extends Controller
 
     public static function paymentTypes()
     {
-        return ['plan', 'deposit', 'withdrawal'];
+        return ['invest', 'deposit', 'withdrawal'];
     }
 
     public static function referralBonus($amount): void
@@ -77,6 +78,11 @@ class Help extends Controller
     }
 
     public static function error(object $val)
+    {
+        return array_values($val->getMessageBag()->toArray())[0][0];
+    }
+
+    public static function ValError(Validator $val)
     {
         return array_values($val->getMessageBag()->toArray())[0][0];
     }

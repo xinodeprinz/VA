@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'username' => ['required', 'string', 'min:3', 'max:20', 'unique:users'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
             'phone_number' => ['required', 'string', 'size:9', 'unique:users'],
+            'country' => ['required', 'string'],
             'password' => ['required', 'string', 'min:5'],
         ]);
     }
@@ -74,12 +75,18 @@ class RegisterController extends Controller
         ]);
     }
 
-    protected function phoneNumberIsValid(string $phoneNumber): bool
+    protected function countries()
     {
-        $validOnes = [5, 7, 8, 9];
-        if ($phoneNumber[0] != 6 || !in_array($phoneNumber[1], $validOnes)) {
-            return false;
-        }
-        return true;
+        return [
+            'Uganda',
+            'Nigeria',
+            'Ghana',
+            'Cameroon',
+            'Central African Republic',
+            'Equatorial Guinea',
+            'Chad',
+            'Congo Republic',
+            'Congo Democratic',
+        ];
     }
 }

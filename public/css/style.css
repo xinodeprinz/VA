@@ -1,7 +1,7 @@
 :root {
-    --bs-main: #356735;
+    --bs-main: #233344;
     --bs-sec: #eaebea;
-    --footer-widget: #318331;
+    --footer-widget: #244262;
 }
 
 body {
@@ -79,16 +79,24 @@ body {
 }
 
 .hero {
-    height: 400px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     text-transform: capitalize;
-    background: url("/storage/images/back-img.jpg") no-repeat 0, 0;
+    background: url("/images/back-img.jpg") no-repeat 0, 0;
     background-size: cover;
     /* background-position: center; */
     position: relative;
+}
+
+.hero h1 {
+    font-size: 60px;
+}
+
+.hero p {
+    font-size: 30px !important;
 }
 
 .hero .container {
@@ -106,13 +114,22 @@ body {
     height: 100%;
     z-index: 0;
     background-color: var(--bs-main);
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .section-title {
     text-transform: capitalize;
     color: var(--bs-main);
     margin-bottom: 0.7rem;
+}
+
+.c-code {
+    outline: none;
+    border: 0;
+    background-color: inherit;
+    margin: 0;
+    padding: 0;
+    color: white;
 }
 
 .dashboard .navbar .active {
@@ -553,6 +570,54 @@ thead {
     border: 1px solid var(--bs-main);
 }
 
+.invest {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
+    background: url("/images/invest.jpg") no-repeat 0, 0;
+    background-size: cover;
+    /* background-position: center; */
+    position: relative;
+}
+
+.invest .container {
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.invest::after {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: var(--bs-main);
+    opacity: 0.7;
+}
+
+.invest .section-title h1 {
+    color: var(--bs-sec);
+    border-bottom: 2px solid var(--bs-sec);
+    font-size: 40px !important;
+}
+
+.invest p {
+    text-transform: none !important;
+    font-size: 25px !important;
+}
+
+.chart {
+    width: 100% !important;
+    display: block;
+    margin-bottom: 6rem !important;
+}
+
 @media(max-width: 991px) {
     .navbar .navbar-nav:last-child .active {
         margin-bottom: 1rem;
@@ -567,9 +632,21 @@ thead {
         --bs-aspect-ratio: 100%;
     }
 
-    .hero {
+    .invest p {
+        font-size: 20px !important;
+    }
+
+    /* .hero {
         background-image: url('/storage/images/back-img-sm.jpg');
         background-position: center center;
+    } */
+}
+
+@media (max-width: 767px) {
+    .chart {
+        display: block;
+        height: 400px !important;
+        margin-bottom: 5rem !important;
     }
 }
 

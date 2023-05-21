@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('index') }}">
-                <img src="/storage/images/logo.jpg" alt="{{ config('app.name') }}" class="logo" />
+                <img src="/images/logo.png" alt="{{ config('app.name') }}" class="logo" />
                 <span>{{ config('app.name') }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -23,7 +23,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    @foreach (['home', 'about', 'plans', 'contact'] as $item)
+                    @foreach (['home', 'about', 'invest', 'contact'] as $item)
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs($item) || (request()->routeIs('index') && $item === 'home') ? 'active' : '' }}"
                                 href="{{ $item === 'home' ? '/' : route($item) }}">{{ __('main.' . $item) }}
@@ -36,17 +36,17 @@
                     </li>
                     <li class="nav-item dropdown languages">
                         <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle">
-                            <img src="/storage/images/{{ App::currentLocale() === 'fre' ? 'french' : 'english' }}.png"
+                            <img src="/images/{{ App::currentLocale() === 'fre' ? 'french' : 'english' }}.png"
                                 alt="{{ App::currentLocale() === 'fre' ? 'French' : 'UK' }} Flag" class="flag">
                             <span>{{ App::currentLocale() === 'fre' ? __('main.french') : __('main.english') }}</span>
                         </a>
                         <div class="dropdown-menu">
                             <a href="{{ route('language.change', ['locale' => 'en']) }}" class="dropdown-item">
-                                <img src="/storage/images/english.png" alt="UK Flag" class="flag">
+                                <img src="/images/english.png" alt="UK Flag" class="flag">
                                 <span>{{ __('main.english') }}</span>
                             </a>
                             <a href="{{ route('language.change', ['locale' => 'fre']) }}" class="dropdown-item">
-                                <img src="/storage/images/french.png" alt="French Flag" class="flag">
+                                <img src="/images/french.png" alt="French Flag" class="flag">
                                 <span>{{ __('main.french') }}</span>
                             </a>
                         </div>
@@ -91,7 +91,7 @@
                         <ul>
                             <li><a href="{{ route('register') }}">{{ __('main.register') }}</a></li>
                             <li><a href="{{ route('home') }}">{{ __('main.dashboard') }}</a></li>
-                            <li><a href="{{ route('plans') }}">{{ __('main.buy plan') }}</a></li>
+                            <li><a href="{{ route('invest') }}">{{ __('main.Start earning') }}</a></li>
                             <li><a href="{{ route('momo-deposit') }}">{{ __('main.deposit') }}</a></li>
                         </ul>
                     </div>

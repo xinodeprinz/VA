@@ -4,11 +4,11 @@
     <!-- Hero section -->
     <div class="hero">
         <div class="container">
-            <h1>Bridon Production LLC</h1>
-            <p>{{ __('main.watch our YouTube videos and get paid') }}</p>
+            <h1>{{ config('app.name') }}</h1>
+            <p>{{ __("main.Africa's video paying platform") }}</p>
             <div>
                 <a href="{{ route('register') }}" class="btn btn-main">{{ __('main.get started') }}</a>
-                <a href="{{ route('plans') }}" class="btn btn-sec ms-2">{{ __('main.our plans') }}</a>
+                <a href="{{ route('invest') }}" class="btn btn-sec ms-2">{{ __('main.Start earning') }}</a>
             </div>
         </div>
     </div>
@@ -31,44 +31,46 @@
                     </p>
                     <div class="d-none d-lg-block">
                         <a href="{{ route('about') }}" class="btn btn-main mb-2">{{ __('main.Learn More') }}</a>
-                        @include('components.social-media')
                         <hr />
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://www.youtube.com/embed/{{ $video->url }}" title="YouTube video"
-                            allowfullscreen></iframe>
-                    </div>
+                    <img src="/images/about.jpg" class="img-fluid" alt="{{ config('app.name') }}">
                 </div>
             </div>
             <div class="d-lg-none">
-                <div class="text-center mb-3">
-                    @include('components.social-media')
-                </div>
-                <a href="{{ route('about') }}" class="btn btn-main">{{ __('main.Learn More') }}</a>
+                <a href="{{ route('about') }}" class="btn btn-main mt-2">{{ __('main.Learn More') }}</a>
                 <hr />
             </div>
         </div>
     </section>
     <!-- End of about us -->
-    <!-- Plans -->
-    <div class="plans my-4">
+    <!--Video-->
+    @if ($video)
+        <section class="video my-4">
+            <div class="container">
+                <div class="section-title">
+                    <h1>{{ __('main.example video') }}</h1>
+                </div>
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/{{ $video->url }}" title="YouTube video"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    @endif
+    <!--End of video-->
+    <!--Invest-->
+    <section class="invest my-4">
         <div class="container">
             <div class="section-title">
-                <h1>{{ __('main.plans') }}</h1>
+                <h1>{{ __('main.Start earning') }}</h1>
             </div>
-
-            <div class="row">
-                @foreach ($plans as $plan)
-                    @include('components.plan', ['plan' => $plan])
-                @endforeach
-            </div>
-            <a href="{{ route('plans') }}" class="btn btn-main">{{ __('main.More Plans') }}</a>
-            <hr />
+            <p>{{ __('main.invest-text') }}</p>
+            <a href="{{ route('invest') }}" class="btn btn-lg btn-main">{{ __('main.invest now') }}</a>
         </div>
-    </div>
-    <!-- End of plans -->
+    </section>
+    <!--End of invest-->
     <!-- FAQs -->
     <section class="faqs">
         <div class="container">

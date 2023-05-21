@@ -12,16 +12,16 @@
                 <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
                     <div class="row">
                         <div class="col-6">
-                            <img src="/storage/images/mtn.png" class="p-method" alt="MTN" />
+                            <img src="/images/mtn.png" class="p-method" alt="MTN" />
                         </div>
                         <div class="col-6">
-                            <img src="/storage/images/orange.png" class="p-method" alt="Orange" />
+                            <img src="/images/orange.png" class="p-method" alt="Orange" />
                         </div>
                     </div>
                     <div class="form">
-                        @if ($plan)
+                        @if ($type == 'invest')
                             <div class="mb-3 amount-bar">{{ __('main.Amount') }}:
-                                <span>{{ number_format($plan->amount, 0) }} FCFA</span>
+                                <span>{{ number_format($details['amount'], 0) }} FCFA</span>
                             </div>
                         @endif
                         <div class="mb-3 amount-bar">{{ __('main.Tel:') }}
@@ -29,15 +29,18 @@
                         </div>
                         @if ($type === 'withdrawal')
                             <div class="mb-3 amount-bar">{{ __('main.Min withdrawal') }}:
-                                <span>{{ number_format($user->plan->min_withdrawal, 0) }} FCFA</span>
+                                <span>{{ number_format($details['min_withdrawal'], 0) }} FCFA</span>
+                            </div>
+                            <div class="mb-3 amount-bar text-capitalize">{{ __('main.account balance') }}:
+                                <span>{{ number_format($user->balance, 0) }} FCFA</span>
                             </div>
                         @endif
                         <form action="{{ route('momo-' . $type) }}" method="POST">
                             @csrf
-                            @if ($type !== 'plan')
+                            @if ($type !== 'invest')
                                 <div class="input-group mb-3">
-                                    <input type="number" placeholder="{{ __('main.Amount') }}" value="{{ old('amount') }}"
-                                        name="amount"
+                                    <input type="number" placeholder="{{ __('main.Amount') }}"
+                                        value="{{ old('amount') }}" name="amount"
                                         class="form-control @error('amount')
                                         is-invalid
                                     @enderror" />

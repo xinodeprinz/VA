@@ -49,7 +49,28 @@
                                 @enderror
                             </div>
                             <div class="input-group mb-3">
-                                <div class="input-group-text">+237</div>
+                                <div class="input-group-text">
+                                    <i class="fa fa-flag" aria-hidden="true"></i>
+                                </div>
+                                <select value="{{ old('country') ?? $countries[0] }}" name="country"
+                                    onchange="countryCode(this)"
+                                    class="form-select text-capitalize @error('country')
+                                    is-invalid
+                                @enderror">
+                                    {{-- <option value="">{{ __('main.Select...') }}</option> --}}
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country }}"
+                                            {{ old('country') === $country ? 'selected' : '' }}>
+                                            {{ $country }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text" id="c-code">+256</div>
                                 <input type="number" placeholder="{{ __('main.Phone (MTN or Orange)') }}"
                                     value="{{ old('phone_number') }}" name="phone_number"
                                     class="form-control @error('phone_number')

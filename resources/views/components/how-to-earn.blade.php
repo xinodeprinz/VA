@@ -7,7 +7,7 @@
     {{ __('main.fa1-d') }}
 </p>
 <p>
-    {{ __('main.fa1-e') }} <a href="{{ route('plans') }}" target="_blank">{{ __('main.subscribe to a plan.') }}</a> Once
+    {{ __('main.fa1-e') }} <a href="{{ route('invest') }}" target="_blank">{{ __('main.subscribe to a plan.') }}</a> Once
     {{ __('main.fa1-f') }}
     <span class="text-main">{{ __('main.2 minutes.') }}</span> {{ __('main.fa1-g') }}
 </p>

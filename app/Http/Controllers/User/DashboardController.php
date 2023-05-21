@@ -27,14 +27,14 @@ class DashboardController extends Controller
         $user->withdrawals = $user->transactions()
             ->where('type', 'withdrawal')->sum('amount');
 
-        // User's plan
-        if ($user->plan) {
-            $user->planDaysLeft = Help::daysLeft($user->expires_on);
+        // Investment days left
+        if ($user->investment) {
+            $user->investmentDaysLeft = Help::daysLeft($user->investment->expires_on);
         }
 
         // Condition to show timer
         $showTimer = $user->watchedVideos()
-            ->whereDate('created_at', Carbon::today())->exists() && $user->plan;
+            ->whereDate('created_at', Carbon::today())->exists() && $user->investment;
 
         return view('pages.user.dashboard', compact('user', 'showTimer'));
     }
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         $video = Video::findOrFail($request->id);
         // Video is good.
         $user->watchedVideos()->create(['video_id' => $video->id]);
-        $user->update(['balance' => $user->balance + $user->plan->video_cost]);
+        $user->update(['balance' => $user->balance + $user->investment->video_cost]);
         return redirect()->route('thanks')
             ->with('success', __("main.You've successfully watched the video and have been rewarded."));
     }

@@ -25,8 +25,6 @@ class User extends Authenticatable implements CanResetPassword
         'balance',
         'is_admin',
         'phone_number',
-        'plan_id',
-        'expires_on',
         'referral',
         'is_blocked',
     ];
@@ -63,9 +61,9 @@ class User extends Authenticatable implements CanResetPassword
         return $this->hasMany(WatchedVideos::class);
     }
 
-    public function plan()
+    public function investment()
     {
-        return $this->belongsTo(Plan::class);
+        return $this->hasOne(Investment::class);
     }
 
     public function referral()

@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Plan extends Model
+class Investment extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'title',
         'amount',
-        'videos',
         'video_cost',
-        'duration',
+        'total_earn',
         'min_withdrawal',
+        'expires_on',
+        'user_id',
     ];
 }

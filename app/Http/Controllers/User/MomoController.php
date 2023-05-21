@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Help;
-use App\Models\Plan;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -20,6 +19,7 @@ class MomoController extends Controller
     protected $data;
     protected $user;
     protected $amount;
+    protected $canWithdraw = true;
 
     public function __construct()
     {
@@ -30,26 +30,30 @@ class MomoController extends Controller
     {
         abort_if(!in_array($type, Help::paymentTypes()), 404);
         $title = $type;
-        $plan = null;
+        $details = null;
         $user = Auth::user();
         $phone_number = $request->user()->phone_number;
 
-        if ($type === 'plan') {
-            if (!$request->session()->has('planId')) {
-                return redirect()->route('plans');
+        if ($type === 'invest') {
+            if (!$request->session()->has('details')) {
+                return redirect()->route('invest');
             }
-            $planId = $request->session()->get('planId');
-            $plan = Plan::findOrFail($planId);
-            $title = $plan->title;
+            $details = $request->session()->get('details');
+        } elseif ($type === 'withdrawal') {
+            $details = $user->investment->toArray();
         }
         // Flashing message to the session if its a plan or deposit.
-        $alertTypes = ['deposit', 'plan'];
+        $alertTypes = ['deposit', 'invest'];
         if (in_array($type, $alertTypes)) {
             $request->session()->flash('info', __('main.payment-alert'));
         }
 
         return view('pages.user.payment', compact(
-            'type', 'plan', 'title', 'phone_number', 'user'
+            'type',
+            'details',
+            'title',
+            'phone_number',
+            'user'
         ));
     }
 
@@ -64,7 +68,7 @@ class MomoController extends Controller
                 Signature::nonceGenerator()
             );
             return true;
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return false;
         }
     }
@@ -93,25 +97,24 @@ class MomoController extends Controller
                 Signature::nonceGenerator()
             );
             return true;
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return false;
         }
     }
 
-    public function processPlan(Request $request)
+    public function processInvestment(Request $request)
     {
         // Protecting route
-        if (!$request->session()->has('planId')) {
-            return redirect()->route('plans');
+        if (!$request->session()->has('details')) {
+            return redirect()->route('invest');
         }
 
-        $planId = $request->session()->get('planId');
-        $plan = Plan::findOrFail($planId);
+        $details = $request->session()->get('details');
         $user = Auth::user();
 
         $data = [
             'phone_number' => $user->phone_number,
-            'amount' => $plan->amount,
+            'amount' => $details['amount'],
         ];
 
         $success = $this->depositHelper($data);
@@ -120,28 +123,29 @@ class MomoController extends Controller
             return back()->with('error', __('main.Transaction failed!'));
         }
 
-        $user->plan_id = $plan->id;
-        $user->expires_on = Help::planExpiryDate($plan->duration);
-        $user->update();
+        // Storing investment info
+        if (!$user->investment)
+            $user->investment()->create($details);
+        else
+            $user->investment()->update($details);
 
         // Giving referral bonus
-        Help::referralBonus($plan->amount);
+        Help::referralBonus($details['amount']);
 
         $user->transactions()->create([
-            'amount' => $plan->amount,
+            'amount' => $details['amount'],
             'type' => 'plan',
         ]);
 
-        $request->session()->forget('planId');
+        $request->session()->forget('details');
 
         return redirect()->route('home')
-            ->with('success', __('main.Your plan purchase was successful.'));
+            ->with('success', __('main.Investment successful'));
     }
 
     public function processDeposit(Request $request)
     {
-        $min = Plan::first()->amount;
-        $request->validate(['amount' => "required|integer|min:$min"]);
+        $request->validate(['amount' => "required|integer|min:250|max:1000000"]);
         $user = Auth::user();
 
         $data = [
@@ -174,10 +178,10 @@ class MomoController extends Controller
             ]));
     }
 
-    public function sendWithdrawalEmail(Request $request)
+    public function processWithdrawal(Request $request)
     {
         $user = $request->user();
-        $request->validate(['amount' => "required|integer|min:{$user->plan->min_withdrawal}"]);
+        $request->validate(['amount' => "required|integer|min:{$user->investment->min_withdrawal}"]);
         if ($user->balance < $request->amount) {
             return back()
                 ->onlyInput('amount')
@@ -198,6 +202,7 @@ class MomoController extends Controller
         $executed = RateLimiter::attempt('withdrawal:' . $user->id, 1, function () {
             $success = $this->withdrawalHelper($this->data);
             if (!$success) {
+                $this->canWithdraw = false;
                 return false;
             }
             $this->user->update(['balance' => $this->user->balance - $this->amount]);
@@ -208,9 +213,9 @@ class MomoController extends Controller
         }, 600); //Run 1 time in 10 minutes.
 
         // Max attempts passed or an error occured
-        if (!$executed) {
+        if (!$executed || !$this->canWithdraw) {
             return redirect()->route('home')
-                ->with('info', __('main.An error occured. Please try again later.'));
+                ->with('info', __("main.You can't withdraw at the moment. Please try again later."));
         }
 
         return redirect()->route('home')

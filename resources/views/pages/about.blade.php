@@ -16,10 +16,7 @@
                     </p>
                 </div>
                 <div class="col-lg-6">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://www.youtube.com/embed/{{ $video->url }}" title="YouTube video"
-                            allowfullscreen></iframe>
-                    </div>
+                    <img src="/images/about.jpg" class="img-fluid" alt="{{ config('app.name') }}">
                 </div>
             </div>
             <hr>

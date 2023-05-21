@@ -20,8 +20,8 @@ class HasWatchedVideo
     {
         $user = $request->user();
 
-        if (!$user->plan) {
-            return redirect()->route('home')->with('info', __("main.You don't have a plan. Purhcase one to start earning."));
+        if (!$user->investment) {
+            return redirect()->route('home')->with('info', __("main.You haven't invested yet. Invest any amount to start earning."));
         }
 
         if ($this->hasWatchedVideo()) {
@@ -37,7 +37,7 @@ class HasWatchedVideo
 
         $today_videos = $user->watchedVideos()->whereDate('created_at', Carbon::today())->count();
 
-        $required_videos = $user->plan->videos;
+        $required_videos = 1;
 
         if ($today_videos >= $required_videos) {
             return true;

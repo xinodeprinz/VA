@@ -11,12 +11,12 @@
     <!-- Alerts -->
     @include('components.alerts')
     <div class="row g-0">
-        <div class="col-lg-4 col-xl-3 d-none d-lg-block">
+        <div class="col-lg-4 col-xl-3 col-xxl-2 d-none d-lg-block">
             <!-- Sidebar -->
             <aside class="sidebar py-3">
                 <div class="container">
                     <a class="navbar-brand" href="{{ route('index') }}">
-                        <img src="/storage/images/logo.jpg" alt="{{ config('app.name') }}" class="logo" />
+                        <img src="/images/logo.png" alt="{{ config('app.name') }}" class="logo" />
                         <span>{{ config('app.name') }}</span>
                     </a>
                     <ul class="sidebar-nav" id="sidebar-nav">
@@ -25,7 +25,7 @@
                 </div>
             </aside>
         </div>
-        <div class="col-lg-8 col-xl-9">
+        <div class="col-lg-8 col-xl-9 col-xxl-10">
             <!-- Navbar -->
             <header class="dashboard">
                 <nav class="navbar navbar-expand-lg">
@@ -81,10 +81,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"
         integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"></script>
     <script src="/js/functions.js"></script>
     <script src="/js/time.js"></script>
     <script src="/js/video.js"></script>
     <script src="/sw.js"></script>
+    <script src="/js/chart.js"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function(reg) {

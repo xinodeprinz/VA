@@ -41,19 +41,12 @@
         <!-- Box -->
         <div class="col-sm-6 col-lg-4 mb-3">
             <div class="bg-warning box shadow p-3 d-flex align-items-center">
-                <div class="icon text-warning icon-yoo">
-                    <i class="fas fa-paper-plane"></i>
+                <div class="icon text-warning">
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
                 <div class="ms-2">
-                    @if ($user->plan)
-                        <h4>{{ __('main.Current Plan:') }} <span>{{ $user->plan->title }}</span></h4>
-                        <h4>{{ __('main.Expires in:') }}
-                            <span>{{ $user->planDaysLeft }} {{ Str::plural('day', $user->planDaysLeft) }}</span>
-                        </h4>
-                    @else
-                        <h4>{{ __('main.Current Plan:') }}</h4>
-                        <div>{{ __('main.None') }}</div>
-                    @endif
+                    <h4>{{ __('main.invested amount') }}</h4>
+                    <div>{{ number_format($user->investment ? $user->investment->amount : 0) }} FCFA</div>
                 </div>
             </div>
         </div>
@@ -65,7 +58,7 @@
                 </div>
                 <div class="ms-2">
                     <h4>{{ __('main.Min withdrawal') }}</h4>
-                    <div>{{ $user->plan ? number_format($user->plan->min_withdrawal, 0) : 0 }} FCFA</div>
+                    <div>{{ $user->investment ? number_format($user->investment->min_withdrawal, 0) : 0 }} FCFA</div>
                 </div>
             </div>
         </div>
@@ -95,14 +88,23 @@
             <a href="{{ route('video') }}" class="dash-btn bg-dark p-2">{{ __('main.watch video') }}</a>
         </div>
         <div class="col-md-6 col-lg-3 mb-3">
-            <a href="{{ route('plans') }}" class="dash-btn bg-warning p-2">upgrade plan</a>
+            <a href="{{ route('invest') }}" class="dash-btn bg-warning p-2">{{ __('main.upgrade') }}</a>
         </div>
     </div>
     <hr />
     <div class="row">
+        <!--Investment days left-->
+        @if ($user->investment)
+            <div class="{{ $showTimer ? 'col-md-6 mb-3' : 'col-md-8 col-lg-6 offset-md-2 offset-lg-3 mb-3' }}">
+                <div class="bg-main box shadow text-center p-3">
+                    <h4>{{ __('main.investment days left') }}</h4>
+                    <div class="fs-5">{{ $user->investmentDaysLeft }}</div>
+                </div>
+            </div>
+        @endif
         <!-- Timer -->
         @if ($showTimer)
-            <div class="col-12">
+            <div class="col-md-6 mb-3">
                 <div class="bg-danger box shadow p-3 d-flex align-items-center justify-content-center">
                     <div class="icon clock-icon text-danger">
                         <i class="fas fa-clock"></i>
@@ -115,4 +117,7 @@
             </div>
         @endif
     </div>
+    <hr>
+    <!--Chart-->
+    <canvas id="chartId" aria-label="chart" class="chart"></canvas>
 @endsection

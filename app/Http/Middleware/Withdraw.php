@@ -22,9 +22,9 @@ class Withdraw
 
         if ($type === 'withdrawal') {
             $user = $request->user();
-            if (!$user->plan) {
+            if (!$user->investment) {
                 return redirect()->route('home')
-                    ->with('info', __("main.You don't have an active plan. Subscribe to one to be eligible for withdrawal."));
+                    ->with('info', __("main.withdraw-alert"));
             }
         }
 

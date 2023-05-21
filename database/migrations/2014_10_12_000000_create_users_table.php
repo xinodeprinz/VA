@@ -19,8 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('balance')->default(0);
-            $table->unsignedBigInteger('plan_id')->default(0);
-            $table->date('expires_on')->nullable();
             $table->string('referral')->nullable();
             $table->string('phone_number')->unique();
             $table->boolean('is_blocked')->default(0);

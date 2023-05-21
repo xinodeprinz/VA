@@ -13,12 +13,8 @@ class MainController extends Controller
 {
     public function index()
     {
-        $plans = Plan::limit(4)->get();
         $video = Video::inRandomOrder()->first();
-        foreach ($plans as $plan) {
-            $plan->total_earn = $plan->videos * $plan->video_cost * $plan->duration;
-        }
-        return view("pages.index", compact('plans', 'video'));
+        return view("pages.index", compact('video'));
     }
 
     public function about()
@@ -27,13 +23,9 @@ class MainController extends Controller
         return view("pages.about", compact('video'));
     }
 
-    public function plans()
+    public function invest()
     {
-        $plans = Plan::paginate(8);
-        foreach ($plans as $plan) {
-            $plan->total_earn = $plan->videos * $plan->video_cost * $plan->duration;
-        }
-        return view("pages.plans", compact('plans'));
+        return view("pages.invest");
     }
 
     public function contact(Request $request)

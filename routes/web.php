@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\User\DashboardController;
@@ -50,7 +51,7 @@ Route::controller(EmailController::class)
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/about', 'about')->name('about');
-    Route::get('/plans', 'plans')->name('plans');
+    Route::get('/invest', 'invest')->name('invest');
     Route::match(['GET', 'POST'], '/contact', 'contact')->name('contact');
     Route::get('/language/{locale}', 'changeLanguage')->name('language.change');
     Route::get('/sitemap', 'sitemap')->name('sitemap');
@@ -70,7 +71,7 @@ Route::controller(DashboardController::class)
             ->group(function () {
                 Route::get('/', 'video')->name('video');
                 Route::post('/reward', 'rewardVideo')
-                    ->middleware('throttle:1,60') //1 request per hour.
+                    ->middleware('throttle:5,60') //5 request per hour.
                     ->name('video-reward');
             });
 
@@ -85,17 +86,11 @@ Route::controller(MomoController::class)
         Route::get('/{type}', 'show')->name('momo');
         // Process payments
         Route::post('/deposit', 'processDeposit')->name('momo-deposit');
-        Route::post('/plan', 'processPlan')->name('momo-plan');
+        Route::post('/invest', 'processInvestment')->name('momo-invest');
         Route::middleware('throttle:5,10')->group(function () { //5 request per 10 minutes
-            Route::match(['GET', 'POST'], '/complete/withdrawal', 'processWithdrawal')->name('process-withdrawal');
-            Route::post('/email/withdrawal', 'sendWithdrawalEmail')->name('momo-withdrawal');
+            // Route::match(['GET', 'POST'], '/complete/withdrawal', 'processWithdrawal')->name('process-withdrawal');
+            Route::post('/email/withdrawal', 'processWithdrawal')->name('momo-withdrawal');
         });
-    });
-
-Route::controller(PlanController::class)
-    ->middleware(['auth', 'myVerify', 'block'])
-    ->group(function () {
-        Route::post('/buy-plan', 'buyPlan')->name('buy-plan');
     });
 
 Route::controller(AdminController::class)
@@ -106,4 +101,11 @@ Route::controller(AdminController::class)
         Route::delete('/users/{id}', 'deleteUser')->name('user.delete');
         Route::patch('/users/{id}', 'blockUser')->name('user.block');
         Route::match(['GET', 'POST'], '/users/email', 'emailUsers')->name('admin.users.email');
+    });
+
+Route::controller(InvestmentController::class)
+    ->prefix('investment')
+    ->group(function () {
+        Route::post('/details', 'calculate');
+        Route::post('/plan', 'plan')->middleware(['auth'])->name('investment-plan');
     });

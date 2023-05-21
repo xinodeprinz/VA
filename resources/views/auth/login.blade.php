@@ -14,7 +14,16 @@
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="input-group mb-3">
-                                <div class="input-group-text">+237</div>
+                                <div class="input-group-text">
+                                    <select name="code" class="c-code">
+                                        @foreach ($codes as $code)
+                                            <option value="{{ $code }}"
+                                                {{ old('code') === $code ? 'selected' : '' }}>
+                                                +{{ $code }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <input type="number" placeholder="{{ __('main.Phone (MTN or Orange)') }}"
                                     value="{{ old('phone_number') }}" name="phone_number"
                                     class="form-control @error('phone_number')

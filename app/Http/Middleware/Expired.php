@@ -20,21 +20,9 @@ class Expired
         $user = $request->user();
         $today = Carbon::today()->format('Y-m-d');
 
-        // Reset user's plan or plan expiry date if one is lacking
-        if (
-            ($user->plan && !$user->expires_on) ||
-            (!$user->plan && $user->expires_on)
-        ) {
-            $user->plan_id = 0;
-            $user->expires_on = null;
-            $user->update();
-        }
-
-        if ($user->plan && $today >= $user->expires_on) {
+        if ($user->investment && $today >= $user->investment->expires_on) {
             // Plan has expired.
-            $user->plan_id = 0;
-            $user->expires_on = null;
-            $user->update();
+            $user->investment()->delete();
             return redirect()->route('home')->with('info', __('main.Your plan has expired.'));
         }
 
