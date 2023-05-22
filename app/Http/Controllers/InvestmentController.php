@@ -66,7 +66,7 @@ class InvestmentController extends Controller
 
         // Calculating minimum withdrawal (3 days before withdrawal)
         if ($total < 1000)
-            $min_withdrawal = $total / 2;
+            $min_withdrawal = $total;
         elseif ($total < 2000)
             $min_withdrawal = $total / 3;
         elseif ($total < 4000)

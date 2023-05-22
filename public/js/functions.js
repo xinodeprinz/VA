@@ -141,13 +141,13 @@ async function details(amountEl, token) {
 
     const result = await response.json();
 
-    // An error occured
     if (response.status != 200) {
+        // An error occured
         getAndSetDetails(null);
-        return sweetAlert({ icon: 'info', title: result.message });
+        return console.log("An error occured!");
+    } else {
+        return getAndSetDetails(result);
     }
-
-    getAndSetDetails(result);
 }
 
 function getAndSetDetails(details) {
