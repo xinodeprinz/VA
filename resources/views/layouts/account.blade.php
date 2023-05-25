@@ -87,6 +87,8 @@
     <script src="/js/video.js"></script>
     <script src="/sw.js"></script>
     <script src="/js/chart.js"></script>
+    <script src="/js/ckeditor.js"></script>
+    @include('components.ckeditor')
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function(reg) {

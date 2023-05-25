@@ -3,6 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -17,12 +19,9 @@ class Users extends Mailable
      */
 
     protected $data;
-    protected $user;
-
-    public function __construct(object $user, array $data)
+    public function __construct(Request $request)
     {
-        $this->user = $user;
-        $this->data = $data;
+        $this->data = $request;
     }
 
     /**
@@ -32,12 +31,11 @@ class Users extends Mailable
      */
     public function build()
     {
-        return $this->from(env('EMAIL'), config('app.name'))
-            ->subject($this->data['subject'])
+        return $this
+            ->from(env('EMAIL'), config('app.name'))
             ->replyTo(env('EMAIL'), config('app.name'))
-            ->view('emails.users')->with([
-            'user' => $this->user,
-            'data' => $this->data,
-        ]);
+            ->subject($this->data->subject)
+            ->view('emails.users')
+            ->with(['body' => $this->data->body]);
     }
 }

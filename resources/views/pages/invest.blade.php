@@ -49,6 +49,12 @@
                                     <td>{{ env('WITHDRAWAL_CHARGES_PERCENTAGE') }}%</td>
                                 </tr>
                             </tbody>
+                            <tfoot class="bg-main text-white">
+                                <tr class="text-capitalize">
+                                    <td>{{ __('main.Amount Range') }}</td>
+                                    <td>250 FCFA - 1,000,000 FCFA</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="shadow bg-white p-3">

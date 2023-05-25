@@ -203,4 +203,5 @@ return [
     "subscribe to our newsletter" => "subscribe to our newsletter",
     "You have subscribed successfully" => "You have subscribed successfully",
     "person@example.com" => "person@example.com",
+    "Amount Range" => "Amount Range",
 ];

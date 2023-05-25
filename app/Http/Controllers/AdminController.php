@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
@@ -39,7 +39,7 @@ class AdminController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return redirect()->route('admin.users')->with('error', 'User not found.');
         }
 
@@ -50,46 +50,39 @@ class AdminController extends Controller
 
     public function emailUsers(Request $request)
     {
-        $user = $request->user();
-        $types = ['bridon', 'prime', 'money'];
-
         if ($request->isMethod('GET')) {
-            return view('pages.admin.email', compact('user', 'types'));
+            $types = $this->getTypes();
+            $user = Auth::user();
+            return view('pages.admin.email', compact('types', 'user'));
         }
 
         $val = Validator::make($request->all(), [
             'type' => 'required|string',
-            'subject' => 'required|string|min:3',
-            'message' => 'required|string',
+            'skip' => 'required|integer',
+            'take' => 'required|integer',
+            'subject' => 'required|string',
+            'body' => 'required|string',
         ]);
 
         if ($val->fails()) {
-            return response()->json(['message' => Help::error($val)], 422);
+            $error = Help::ValError($val);
+            return response()->json(['message' => $error], 422);
         }
 
-        if (!in_array($request->type, $types)) {
-            return response()->json(['message' => 'Invalid type'], 400);
+        $users = Help::getUsers($request);
+
+        if (!$users) {
+            return response()->json(['message' => 'Invalid Type'], 400);
         }
 
         $success = 0;
         $failed = 0;
 
-        if ($request->type === 'bridon') {
-            $users = User::orderBy('id', 'desc');
-        } elseif ($request->type === 'prime') {
-            $users = DB::table('p_users')->orderBy('id', 'desc');
-        } else {
-            return response()->json(['message' => 'Type not yet available'], 400);
-        }
-
-        foreach ($users->get() as $u) {
+        foreach ($users as $user) {
             try {
-                Mail::to($u->email)->send(new Users($u, $request->all()));
+                Mail::to($user->email)->send(new Users($request));
                 $success += 1;
-                if ($request->type !== 'bridon') {
-                    $users->where('id', $u->id)->delete();
-                }
-            } catch (\Throwable$th) {
+            } catch (\Throwable $th) {
                 $failed += 1;
                 continue;
             }
@@ -99,5 +92,24 @@ class AdminController extends Controller
             'success' => $success,
             'failed' => $failed,
         ]);
+    }
+
+    protected function getTypes()
+    {
+        $types = Help::types();
+        $result = [];
+        foreach ($types as $type) {
+            $count = DB::table($type . '_users')->count();
+            $result[$type] = $count;
+        }
+        return $result;
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate(['image' => 'required|image']);
+        $imagePath = $request->file('image')->store('images', 'public');
+        $url = config('app.url') . "/storage/" . $imagePath;
+        return response()->json(['url' => $url]);
     }
 }

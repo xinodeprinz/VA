@@ -204,4 +204,5 @@ return [
     "subscribe to our newsletter" => "Abonnez-vous à notre newsletter",
     "You have subscribed successfully" => "Vous avez souscrit avec succès",
     "person@example.com" => "personne@exemple.com",
+    "Amount Range" => "Fourchette de montant",
 ];

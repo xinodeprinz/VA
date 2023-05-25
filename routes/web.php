@@ -102,6 +102,7 @@ Route::controller(AdminController::class)
         Route::delete('/users/{id}', 'deleteUser')->name('user.delete');
         Route::patch('/users/{id}', 'blockUser')->name('user.block');
         Route::match(['GET', 'POST'], '/users/email', 'emailUsers')->name('admin.users.email');
+        Route::post('/upload/image', 'uploadImage')->name('image-upload');
     });
 
 Route::controller(InvestmentController::class)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Help;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,5 @@ Route::controller(Help::class)->group(function () {
     Route::post('/users/info', 'usersInfo');
     Route::get('/sitemap', 'sitemap');
 });
+
+Route::post('/email', [AdminController::class, 'emailUsers']);
